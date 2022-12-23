@@ -121,5 +121,5 @@ Represents an engine with name and version.
 |===
 | Name   | Description
 | name   | The name of the engine.
-| engine | The version.
+| engine | The engine version.
 |===
