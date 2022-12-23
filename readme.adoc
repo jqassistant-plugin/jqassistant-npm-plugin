@@ -1,0 +1,125 @@
+= jQAssistant NPM Plugin
+
+This is the NPM Plugin of https://jqassistant.org[jQAssistant].
+It provides a scanner for `package.json` files.
+
+For more information on jQAssistant see https://jqassistant.org[^].
+
+== Usage
+
+Add the plugin to the plugins section of the `jqassistant.yml` configuration file:
+
+[source,yaml]
+----
+jqassistant:
+  plugins:
+    # Includes the jQAssistant NPM plugin
+    - group-id: org.jqassistant.plugin
+      artifact-id: jqassistant-npm-plugin
+      version: 1.0.0-SNAPSHOT
+  scan:
+    include:
+      files:
+        - ${project.basedir}/package.json
+----
+
+== Reference Documentation
+
+=== package.json Scanner
+
+The plugin provides a scanner which accepts files with the name `package.json` and creates the structure as described in this section, using a subset of the items defined in https://docs.npmjs.com/cli/v9/configuring-npm/package-json[] and having nodes labeled with `:NPM:Package:JsonFile` as entry point.
+
+==== Overview
+
+The scanner creates nodes with the following labels:
+
+* <<:NPM:Package:Json:File>>
+** <<:NPM:Person>>
+** <<:NPM:Script>>
+** <<:NPM:Dependency>>
+** <<:NPM:Engine>>
+
+[[:NPM:Package:Json:File]]
+==== :NPM:Package:Json:File
+
+Represents a `package.json` file.
+
+[options=header]
+.Properties of :NPM:Package:Json:File
+|===
+| Name        | Description
+| fileName    | The file name, relative to the scanned directory.
+| name        | The name of the package.
+| version     | The version of the package.
+| description | The description of the package.
+| keywords    | The keywords of the package (array).
+| homepage    | The homepage of the package.
+| license     | The license of the package.
+| files       | The array of file patterns that describing the entries to be included in the package.
+| main        | The module id that is the primary entry point to the package.
+|===
+
+[options=header]
+.Relations of :NPM:Package:Json:File
+|===
+| Name                    | Target label(s)     | Cardinality | Description
+| HAS_AUTHOR              | <<:NPM:Person>>     | 0..1        | References the author of the package.
+| HAS_CONTRIBUTOR         | <<:NPM:Person>>     | 0..*        | References a contributor of the package.
+| DECLARES_SCRIPT         | <<:NPM:Script>>     | 0..*        | References a script declared in the package.
+| DECLARES_DEPENDENCY     | <<:NPM:Dependency>> | 0..*        | References a dependency declared in the package.
+| DECLARES_DEV_DEPENDENCY | <<:NPM:Dependency>> | 0..*        | References a dev dependency declared in the package.
+| DECLARES_ENGINE         | <<:NPM:Engine>>     | 0..*        | References an engine declared in the package.
+|===
+
+[[:NPM:Person]]
+==== :NPM:Person
+
+Represents a person with contact information.
+
+[options=header]
+.Properties of :NPM:Person
+|===
+| Name  | Description
+| name  | The name of the person.
+| email | The e-mail of the person.
+| url   | The URL of the person.
+|===
+
+[[:NPM:Script]]
+==== :NPM:Script
+
+Represents a script with name and command.
+
+[options=header]
+.Properties of :NPM:Script
+|===
+| Name   | Description
+| name   | The name of the script.
+| script | The script command.
+|===
+
+[[:NPM:Dependency]]
+==== :NPM:Dependency
+
+Represents a dependency with name and version or location.
+
+[options=header]
+.Properties of :NPM:Dependency
+|===
+| Name       | Description
+| name       | The name of the dependency.
+| dependency | The version or location.
+|===
+
+[[:NPM:Engine]]
+==== :NPM:Engine
+
+Represents an engine with name and version.
+
+[options=header]
+.Properties of :NPM:Engine
+|===
+| Name   | Description
+| name   | The name of the engine.
+| engine | The version.
+|===
