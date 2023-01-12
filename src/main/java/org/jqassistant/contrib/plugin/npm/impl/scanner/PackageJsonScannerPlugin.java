@@ -1,4 +1,4 @@
-package org.jqassistant.plugin.npm.impl.scanner;
+package org.jqassistant.contrib.plugin.npm.impl.scanner;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +16,7 @@ import com.buschmais.jqassistant.plugin.json.api.model.JSONFileDescriptor;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jqassistant.plugin.npm.api.model.*;
+import org.jqassistant.contrib.plugin.npm.api.model.*;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;

@@ -3,12 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.jqassistant.plugin</groupId>
+        <groupId>org.jqassistant.contrib.common</groupId>
         <artifactId>parent</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>1.12.0</version>
         <relativePath/>
     </parent>
 
+    <groupId>org.jqassistant.contrib.plugin</groupId>
     <artifactId>jqassistant-npm-plugin</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
@@ -40,27 +41,21 @@
     </developers>
 
     <scm>
-        <connection>scm:git:https://github.com/jqassistant-plugin/jqassistant-npm-plugin.git</connection>
-        <developerConnection>scm:git:https://github.com/jqassistant-plugin/jqassistant-npm-plugin.git</developerConnection>
-        <url>https://github.com/jqassistant-plugin/jqassistant-npm-plugin</url>
+        <connection>scm:git:https://github.com/jqassistant-contrib/jqassistant-npm-plugin.git</connection>
+        <developerConnection>scm:git:https://github.com/jqassistant-contrib/jqassistant-npm-plugin.git</developerConnection>
+        <url>https://github.com/jqassistant-contrib/jqassistant-npm-plugin</url>
         <tag>HEAD</tag>
     </scm>
 
     <properties>
-        <jqa-plugin-common.version>2.0.0-M1</jqa-plugin-common.version>
-        <jqa-json-plugin.version>2.0.0-M1</jqa-json-plugin.version>
+        <jqa-plugin-common.version>1.12.2</jqa-plugin-common.version>
+        <jqa-json-plugin.version>1.12.2</jqa-json-plugin.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.buschmais.jqassistant.core</groupId>
             <artifactId>scanner</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-nop</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.buschmais.jqassistant.plugin</groupId>
@@ -77,10 +72,20 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.13.4.2</version>
         </dependency>
         <dependency>
             <groupId>com.buschmais.jqassistant.core</groupId>
             <artifactId>test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.buschmais.jqassistant.neo4jserver</groupId>
+            <artifactId>neo4jv3</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

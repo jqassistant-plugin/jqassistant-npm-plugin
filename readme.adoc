@@ -14,7 +14,7 @@ Add the plugin to the plugins section of the `jqassistant.yml` configuration fil
 jqassistant:
   plugins:
     # Includes the jQAssistant NPM plugin
-    - group-id: org.jqassistant.plugin
+    - group-id: org.jqassistant.contrib.plugin
       artifact-id: jqassistant-npm-plugin
       version: 1.0.0-SNAPSHOT
   scan:
@@ -25,9 +25,9 @@ jqassistant:
 
 == Reference Documentation
 
-=== package.json Scanner
+=== Scanner for `package.json` files
 
-The plugin provides a scanner which accepts files with the name `package.json` and creates the structure as described in this section, using a subset of the items defined in https://docs.npmjs.com/cli/v9/configuring-npm/package-json[] and having nodes labeled with `:NPM:Package:JsonFile` as entry point.
+The plugin provides a scanner which accepts files with the name `package.json` and creates the structure as described in this section, using a subset of the items defined in https://docs.npmjs.com/cli/v9/configuring-npm/package-json[] and having nodes labeled with `:NPM:Package:Json:File` as entry point.
 
 ==== Overview
 

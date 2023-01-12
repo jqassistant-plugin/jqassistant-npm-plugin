@@ -1,4 +1,4 @@
-package org.jqassistant.plugin.npm.api.model;
+package org.jqassistant.contrib.plugin.npm.api.model;
 
 import java.util.List;
 
