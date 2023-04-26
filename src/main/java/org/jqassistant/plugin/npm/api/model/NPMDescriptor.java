@@ -1,4 +1,4 @@
-package org.jqassistant.contrib.plugin.npm.api.model;
+package org.jqassistant.plugin.npm.api.model;
 
 import com.buschmais.jqassistant.core.store.api.model.Descriptor;
 import com.buschmais.xo.api.annotation.Abstract;

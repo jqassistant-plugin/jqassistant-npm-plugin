@@ -1,4 +1,4 @@
-package org.jqassistant.contrib.plugin.npm.impl.scanner;
+package org.jqassistant.plugin.npm.impl.scanner;
 
 import java.util.List;
 import java.util.Map;

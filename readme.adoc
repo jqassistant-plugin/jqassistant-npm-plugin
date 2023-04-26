@@ -14,9 +14,9 @@ Add the plugin to the plugins section of the `jqassistant.yml` configuration fil
 jqassistant:
   plugins:
     # Includes the jQAssistant NPM plugin
-    - group-id: org.jqassistant.contrib.plugin
+    - group-id: org.jqassistant.plugin
       artifact-id: jqassistant-npm-plugin
-      version: 1.0.0-SNAPSHOT
+      version: 2.0.0-SNAPSHOT
   scan:
     include:
       files:

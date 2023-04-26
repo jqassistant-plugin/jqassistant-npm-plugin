@@ -1,4 +1,4 @@
-package org.jqassistant.contrib.plugin.npm;
+package org.jqassistant.plugin.npm;
 
 import java.io.File;
 import java.util.List;
@@ -8,7 +8,7 @@ import com.buschmais.jqassistant.core.scanner.api.DefaultScope;
 import com.buschmais.jqassistant.core.test.plugin.AbstractPluginIT;
 import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
 
-import org.jqassistant.contrib.plugin.npm.api.model.*;
+import org.jqassistant.plugin.npm.api.model.*;
 import org.junit.jupiter.api.Test;
 
 import static java.util.stream.Collectors.toMap;
