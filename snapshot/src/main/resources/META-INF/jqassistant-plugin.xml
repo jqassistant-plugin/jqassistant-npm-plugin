@@ -1,0 +1,17 @@
+<jqassistant-plugin xmlns="http://schema.jqassistant.org/plugin/v1.10"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://schema.jqassistant.org/plugin/v1.10 https://schema.jqassistant.org/plugin/jqassistant-plugin-v1.10.xsd"
+                    name="jQAssistant NPM Plugin" id="jqa.plugin.npm"
+                    version="${project.version}">
+    <description>Provides scanners and rules for NPM based projects.</description>
+    <model>
+        <class>org.jqassistant.plugin.npm.api.model.PackageDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.PersonDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.ScriptDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.DependencyDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.EngineDescriptor</class>
+    </model>
+    <scanner>
+        <class>org.jqassistant.plugin.npm.impl.scanner.PackageJsonScannerPlugin</class>
+    </scanner>
+</jqassistant-plugin>
