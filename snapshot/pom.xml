@@ -46,7 +46,7 @@
     </scm>
 
     <properties>
-        <jqa-json-plugin.version>2.3.1</jqa-json-plugin.version>
+        <jqa-json-plugin.version>2.0.0</jqa-json-plugin.version>
     </properties>
 
     <build>
