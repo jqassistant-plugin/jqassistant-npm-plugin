@@ -3,6 +3,7 @@ package org.jqassistant.plugin.npm.impl.scanner;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,9 +27,10 @@ public class Package {
 
     private String license;
 
-    private Person author;
-
-    private List<Person> contributors;
+    @JsonDeserialize(using = AuthorDeserializer.class)
+    private Map<String, Object> author; //Object -> String oder Map<String, Object>
+    @JsonDeserialize(using = ContributorsDeserializer.class)
+    private List<Map<String,Object>> contributors;
 
     private String[] files;
 
@@ -42,13 +44,6 @@ public class Package {
 
     private Map<String, String> engines;
 
-    @Getter
-    @Setter
-    @ToString
-    public static class Person {
-        private String name;
-        private String email;
-        private String url;
 
-    }
+
 }

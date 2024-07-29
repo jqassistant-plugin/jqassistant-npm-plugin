@@ -1,9 +1,12 @@
 package org.jqassistant.plugin.npm.impl.scanner;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 import com.buschmais.jqassistant.core.scanner.api.Scanner;
 import com.buschmais.jqassistant.core.scanner.api.ScannerPlugin.Requires;
@@ -48,13 +51,13 @@ public class PackageJsonScannerPlugin extends AbstractScannerPlugin<FileResource
         packageDescriptor.setKeywords(value.getKeywords());
         packageDescriptor.setHomepage(value.getHomepage());
         packageDescriptor.setLicense(value.getLicense());
-        Package.Person author = value.getAuthor();
+        Map<String, Object> author = value.getAuthor();
         if (author != null) {
             packageDescriptor.setAuthor(getPersonDescriptor(author, store));
         }
-        List<Package.Person> contributors = value.getContributors();
+        List<Map<String, Object>> contributors = value.getContributors();
         if (contributors != null) {
-            for (Package.Person contributor : contributors) {
+            for (Map<String, Object> contributor : contributors) {
                 packageDescriptor.getContributors()
                     .add(getPersonDescriptor(contributor, store));
             }
@@ -72,12 +75,32 @@ public class PackageJsonScannerPlugin extends AbstractScannerPlugin<FileResource
         return packageDescriptor;
     }
 
-    private PersonDescriptor getPersonDescriptor(Package.Person author, Store store) {
+    private PersonDescriptor getPersonDescriptor(Map<String, Object> author, Store store) {
         PersonDescriptor authorDescriptor = store.create(PersonDescriptor.class);
-        authorDescriptor.setName(author.getName());
-        authorDescriptor.setEmail(author.getEmail());
-        authorDescriptor.setUrl(author.getUrl());
+        if (author.containsKey("name")) {
+            authorDescriptor.setName((String) author.get("name"));
+            authorDescriptor.setEmail((String) author.get("email"));
+            authorDescriptor.setUrl((String) author.get("url"));
+        } else {
+            String authorString = (String) author.get("");
+            String[] parts = authorString.split("\\s+");
+            String name = Arrays.stream(parts)
+                .filter(part -> !part.contains("@") && !part.startsWith("http://") && !part.startsWith("https://"))
+                .collect(Collectors.joining(" "));
+            String email = Arrays.stream(parts)
+                .filter(part -> part.contains("@"))
+                .findFirst()
+                .orElse(null);
+            String url = Arrays.stream(parts)
+                .filter(part -> part.startsWith("http://") || part.startsWith("https://"))
+                .findFirst()
+                .orElse(null);
+            authorDescriptor.setName(name);
+            authorDescriptor.setEmail(email);
+            authorDescriptor.setUrl(url);
+        }
         return authorDescriptor;
+
     }
 
     private <T extends NamedDescriptor> List<T> map(Map<String, String> map, Class<T> descriptorType, BiConsumer<T, String> valueConsumer, Store store) {
