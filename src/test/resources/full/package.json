@@ -41,6 +41,10 @@
     "@lingui/cli": "^3.4.0",
     "@lingui/macro": "^3.4.0"
   },
+  "peerDependencies": {
+    "tea": "2.x",
+    "soy-milk": "1.2"
+  },
   "engines": {
     "node": ">=14",
     "npm": ">=6"
