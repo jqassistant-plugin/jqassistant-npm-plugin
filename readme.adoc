@@ -62,13 +62,14 @@ Represents a `package.json` file.
 [options=header]
 .Relations of :NPM:Package:Json:File
 |===
-| Name                    | Target label(s)     | Cardinality | Description
-| HAS_AUTHOR              | <<:NPM:Person>>     | 0..1        | References the author of the package.
-| HAS_CONTRIBUTOR         | <<:NPM:Person>>     | 0..*        | References a contributor of the package.
-| DECLARES_SCRIPT         | <<:NPM:Script>>     | 0..*        | References a script declared in the package.
-| DECLARES_DEPENDENCY     | <<:NPM:Dependency>> | 0..*        | References a dependency declared in the package.
-| DECLARES_DEV_DEPENDENCY | <<:NPM:Dependency>> | 0..*        | References a dev dependency declared in the package.
-| DECLARES_ENGINE         | <<:NPM:Engine>>     | 0..*        | References an engine declared in the package.
+| Name                     | Target label(s)     | Cardinality | Description
+| HAS_AUTHOR               | <<:NPM:Person>>     | 0..1        | References the author of the package.
+| HAS_CONTRIBUTOR          | <<:NPM:Person>>     | 0..*        | References a contributor of the package.
+| DECLARES_SCRIPT          | <<:NPM:Script>>     | 0..*        | References a script declared in the package.
+| DECLARES_DEPENDENCY      | <<:NPM:Dependency>> | 0..*        | References a dependency declared in the package.
+| DECLARES_DEV_DEPENDENCY  | <<:NPM:Dependency>> | 0..*        | References a dev dependency declared in the package.
+| DECLARES_PEER_DEPENDENCY | <<:NPM:Dependency>> | 0..*        | References a peer dependency declared in the package.
+| DECLARES_ENGINE          | <<:NPM:Engine>>     | 0..*        | References an engine declared in the package.
 |===
 
 [[:NPM:Person]]

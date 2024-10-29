@@ -67,6 +67,8 @@ public class PackageJsonScannerPlugin extends AbstractScannerPlugin<FileResource
             .addAll(map(value.getDependencies(), DependencyDescriptor.class, DependencyDescriptor::setDependency, store));
         packageDescriptor.getDevDependencies()
             .addAll(map(value.getDevDependencies(), DependencyDescriptor.class, DependencyDescriptor::setDependency, store));
+        packageDescriptor.getPeerDependencies()
+            .addAll(map(value.getPeerDependencies(), DependencyDescriptor.class, DependencyDescriptor::setDependency, store));
         packageDescriptor.getEngines()
             .addAll(map(value.getEngines(), EngineDescriptor.class, EngineDescriptor::setEngine, store));
         return packageDescriptor;
