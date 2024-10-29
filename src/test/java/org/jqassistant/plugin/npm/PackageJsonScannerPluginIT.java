@@ -74,6 +74,12 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(devDependenciesByName).containsEntry("@lingui/cli", "^3.4.0")
             .containsEntry("@lingui/macro", "^3.4.0");
 
+        Map<String, String> peerDependenciesByName = packageJson.getPeerDependencies()
+            .stream()
+            .collect(toMap(NamedDescriptor::getName, DependencyDescriptor::getDependency));
+        assertThat(peerDependenciesByName).containsEntry("tea", "2.x")
+            .containsEntry("soy-milk", "1.2");
+
         Map<String, String> enginesByName = packageJson.getEngines()
             .stream()
             .collect(toMap(NamedDescriptor::getName, EngineDescriptor::getVersionRange));

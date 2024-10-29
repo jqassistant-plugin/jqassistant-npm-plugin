@@ -43,6 +43,8 @@ public class Package {
 
     private Map<String, String> devDependencies;
 
+    private Map<String, String> peerDependencies;
+
     private Map<String, String> engines;
 
 }
