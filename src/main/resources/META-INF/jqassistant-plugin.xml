@@ -12,6 +12,6 @@
         <class>org.jqassistant.plugin.npm.api.model.EngineDescriptor</class>
     </model>
     <scanner>
-        <class>org.jqassistant.plugin.npm.impl.scanner.PackageJsonScannerPlugin</class>
+        <class>org.jqassistant.plugin.npm.impl.PackageJsonScannerPlugin</class>
     </scanner>
 </jqassistant-plugin>

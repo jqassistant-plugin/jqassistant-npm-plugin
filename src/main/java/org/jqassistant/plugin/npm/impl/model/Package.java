@@ -1,4 +1,4 @@
-package org.jqassistant.plugin.npm.impl.scanner;
+package org.jqassistant.plugin.npm.impl.model;
 
 import java.util.List;
 import java.util.Map;
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.jqassistant.plugin.npm.impl.PackageJsonDeserializer;
 
 /**
  * Used for unmarshalling package.json files using Jackson.
@@ -14,6 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@JsonDeserialize(using = PackageJsonDeserializer.class)
 public class Package {
 
     private String name;
@@ -27,10 +29,9 @@ public class Package {
 
     private String license;
 
-    @JsonDeserialize(using = AuthorDeserializer.class)
-    private Map<String, Object> author; //Object -> String oder Map<String, Object>
-    @JsonDeserialize(using = ContributorsDeserializer.class)
-    private List<Map<String,Object>> contributors;
+    private Person author;
+
+    private List<Person> contributors;
 
     private String[] files;
 
@@ -43,7 +44,5 @@ public class Package {
     private Map<String, String> devDependencies;
 
     private Map<String, String> engines;
-
-
 
 }
