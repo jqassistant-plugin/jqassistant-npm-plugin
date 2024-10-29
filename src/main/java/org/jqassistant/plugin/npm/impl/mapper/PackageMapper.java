@@ -29,6 +29,7 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Mapping(source = "scripts", target = "scripts", qualifiedByName = "scriptsMapping")
     @Mapping(source = "dependencies", target = "dependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "devDependencies", target = "devDependencies", qualifiedByName = "dependencyMapping")
+    @Mapping(source = "peerDependencies", target = "peerDependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "engines", target = "engines", qualifiedByName = "engineMapping")
     PackageDescriptor toDescriptor(Package value, @Context Scanner scanner);
 

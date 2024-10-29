@@ -76,7 +76,7 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
 
         Map<String, String> peerDependenciesByName = packageJson.getPeerDependencies()
             .stream()
-            .collect(toMap(NamedDescriptor::getName, DependencyDescriptor::getDependency));
+            .collect(toMap(NamedDescriptor::getName, DependencyDescriptor::getVersionRange));
         assertThat(peerDependenciesByName).containsEntry("tea", "2.x")
             .containsEntry("soy-milk", "1.2");
 

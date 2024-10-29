@@ -47,6 +47,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "scripts": result.setScripts(deserializeStringMap("scripts", valueNode)); break;
                     case "dependencies": result.setDependencies(deserializeStringMap("dependencies", valueNode)); break;
                     case "devDependencies": result.setDevDependencies(deserializeStringMap("devDependencies", valueNode)); break;
+                    case "peerDependencies": result.setPeerDependencies(deserializeStringMap("peerDependencies", valueNode)); break;
                     case "engines": result.setEngines(deserializeStringMap("engines", valueNode)); break;
                     default: log.error("Encountered unknown top-level property in package.json ({})", packageJsonProperty.getKey());
                 }
