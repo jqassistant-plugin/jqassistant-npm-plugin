@@ -1,0 +1,10 @@
+{
+  "author": "Test User 1 <test1@example.com> (https://example.com/users/test1)",
+  "contributors": [
+    "Test User 2 <test2@example.com> (https://example.com/users/test2)",
+    "Test User 3 (https://example.com/users/test3)",
+    "Test User 4 <test4@example.com>",
+    "Test User 5"
+  ]
+}
+

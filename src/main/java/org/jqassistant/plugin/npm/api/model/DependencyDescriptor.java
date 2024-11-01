@@ -9,8 +9,8 @@ import com.buschmais.xo.neo4j.api.annotation.Label;
 @Label("Dependency")
 public interface DependencyDescriptor extends NPMDescriptor, NamedDescriptor {
 
-    String getDependency();
+    String getVersionRange();
 
-    void setDependency(String dependency);
+    void setVersionRange(String versionRange);
 
 }

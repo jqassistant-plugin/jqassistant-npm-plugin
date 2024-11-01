@@ -8,8 +8,8 @@ import com.buschmais.xo.neo4j.api.annotation.Label;
 @Label("Engine")
 public interface EngineDescriptor extends NPMDescriptor, NamedDescriptor {
 
-    String getEngine();
+    String getVersionRange();
 
-    void setEngine(String engine);
+    void setVersionRange(String versionRange);
 
 }

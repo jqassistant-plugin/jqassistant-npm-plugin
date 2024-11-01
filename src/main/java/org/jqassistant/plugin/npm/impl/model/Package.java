@@ -1,11 +1,13 @@
-package org.jqassistant.plugin.npm.impl.scanner;
+package org.jqassistant.plugin.npm.impl.model;
 
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.jqassistant.plugin.npm.impl.PackageJsonDeserializer;
 
 /**
  * Used for unmarshalling package.json files using Jackson.
@@ -13,6 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@JsonDeserialize(using = PackageJsonDeserializer.class)
 public class Package {
 
     private String name;
@@ -44,13 +47,4 @@ public class Package {
 
     private Map<String, String> engines;
 
-    @Getter
-    @Setter
-    @ToString
-    public static class Person {
-        private String name;
-        private String email;
-        private String url;
-
-    }
 }
