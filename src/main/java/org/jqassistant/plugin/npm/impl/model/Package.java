@@ -1,13 +1,13 @@
 package org.jqassistant.plugin.npm.impl.model;
 
-import java.util.List;
-import java.util.Map;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.jqassistant.plugin.npm.impl.PackageJsonDeserializer;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Used for unmarshalling package.json files using Jackson.
@@ -26,6 +26,8 @@ public class Package {
     private String[] keywords;
 
     private String homepage;
+
+    private Bugs bugs;
 
     private String license;
 

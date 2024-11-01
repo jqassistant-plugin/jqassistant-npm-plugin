@@ -1,15 +1,14 @@
 package org.jqassistant.plugin.npm;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-
 import com.buschmais.jqassistant.core.scanner.api.DefaultScope;
 import com.buschmais.jqassistant.core.test.plugin.AbstractPluginIT;
 import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
-
 import org.jqassistant.plugin.npm.api.model.*;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,6 +41,9 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(packageJson.getDescription()).isEqualTo("Test Package Descriptor");
         assertThat(packageJson.getKeywords()).isEqualTo(new String[] { "jQAssistant", "Test" });
         assertThat(packageJson.getHomepage()).isEqualTo("https://jqassistant.org");
+        assertThat(packageJson.getBugTracker()).isNotNull();
+        assertThat(packageJson.getBugTracker().getUrl()).isEqualTo("https://bug.tracker.example.com");
+        assertThat(packageJson.getBugTracker().getEmail()).isEqualTo("bugs@example.com");
         assertThat(packageJson.getLicense()).isEqualTo("GPLv3");
 
         verifyPerson(packageJson.getAuthor(), "Test User 1", "test1@example.com", "https://example.com/users/test1");

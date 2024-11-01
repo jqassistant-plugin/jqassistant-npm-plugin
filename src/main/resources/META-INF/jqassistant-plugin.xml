@@ -6,6 +6,7 @@
     <description>Provides scanners and rules for NPM based projects.</description>
     <model>
         <class>org.jqassistant.plugin.npm.api.model.PackageDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.BugTrackerDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.PersonDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.ScriptDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.DependencyDescriptor</class>

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
+import org.jqassistant.plugin.npm.impl.model.Bugs;
 import org.jqassistant.plugin.npm.impl.model.Package;
 import org.jqassistant.plugin.npm.impl.model.Person;
 
@@ -39,6 +40,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "description": result.setDescription(deserializeStringProperty("description", valueNode)); break;
                     case "keywords": result.setKeywords(deserializeStringArrayProperty("keywords", valueNode)); break;
                     case "homepage": result.setHomepage(deserializeStringProperty("homepage", valueNode)); break;
+                    case "bugs": result.setBugs(deserializeBugsProperty(valueNode)); break;
                     case "license": result.setLicense(deserializeStringProperty("license", valueNode)); break;
                     case "author": result.setAuthor(deserializePersonProperty("author", valueNode)); break;
                     case "contributors": result.setContributors(deserializeContributorsProperty(valueNode)); break;
@@ -83,6 +85,23 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
             log.error("property {} is not a string array", propertyName);
             return new String[0];
         }
+    }
+
+    private Map<String, String> deserializeStringMap(String propertyName, JsonNode node) {
+        Map<String, String> result = new HashMap<>();
+        if(node.isObject()) {
+            node.fields().forEachRemaining(field -> {
+                JsonNode value = field.getValue();
+                if(value.isTextual()) {
+                    result.put(field.getKey(), value.textValue());
+                } else {
+                    log.error("Property {} of {} is not a string", field.getKey(), propertyName);
+                }
+            });
+        } else {
+            log.error("property {} is not an object", propertyName);
+        }
+        return result;
     }
 
     private Person deserializePersonProperty(String propertyName, JsonNode node) {
@@ -141,21 +160,21 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
         return result;
     }
 
-    private Map<String, String> deserializeStringMap(String propertyName, JsonNode node) {
-        Map<String, String> result = new HashMap<>();
-
+    private Bugs deserializeBugsProperty(JsonNode node) {
         if(node.isObject()) {
-            node.fields().forEachRemaining(field -> {
-                JsonNode value = field.getValue();
-                if(value.isTextual()) {
-                    result.put(field.getKey(), value.textValue());
-                } else {
-                    log.error("Property {} of {} is not a string", field.getKey(), propertyName);
+            Bugs result = new Bugs();
+            node.fields().forEachRemaining(entry -> {
+                switch (entry.getKey()) {
+                    case "email": result.setEmail(deserializeStringProperty("bugs.email", entry.getValue())); break;
+                    case "url": result.setUrl(deserializeStringProperty("bugs.url", entry.getValue())); break;
+                    default: log.error("object content of bugs does contain unknown property ({})", entry.getKey());
                 }
             });
+            return result;
         } else {
-            log.error("property {} is not an object", propertyName);
+            log.error("property bugs is not an object");
         }
-        return result;
+        return null;
     }
+
 }

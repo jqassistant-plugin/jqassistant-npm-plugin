@@ -1,10 +1,10 @@
 package org.jqassistant.plugin.npm.api.model;
 
-import java.util.List;
-
 import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
 import com.buschmais.xo.neo4j.api.annotation.Label;
 import com.buschmais.xo.neo4j.api.annotation.Relation;
+
+import java.util.List;
 
 /**
  * Represents a package.json file.
@@ -39,6 +39,11 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
     String getMain();
 
     void setMain(String main);
+
+    @Relation("HAS_BUG_TRACKER")
+    BugTrackerDescriptor getBugTracker();
+
+    void setBugTracker(BugTrackerDescriptor bugs);
 
     @Relation("HAS_AUTHOR")
     PersonDescriptor getAuthor();

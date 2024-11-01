@@ -7,6 +7,10 @@
     "Test"
   ],
   "homepage": "https://jqassistant.org",
+  "bugs": {
+    "url": "https://bug.tracker.example.com",
+    "email": "bugs@example.com"
+  },
   "license": "GPLv3",
   "author": {
     "name": "Test User 1",

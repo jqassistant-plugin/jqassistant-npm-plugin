@@ -20,18 +20,19 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.mapstruct.factory.Mappers.getMapper;
 
-@Mapper(uses = {PersonMapper.class})
+@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class})
 public interface PackageMapper extends DescriptorMapper<Package, PackageDescriptor> {
 
-    PackageMapper INSTANCE = getMapper(PackageMapper.class);
-
     @Override
+    @Mapping(source = "bugs", target = "bugTracker")
     @Mapping(source = "scripts", target = "scripts", qualifiedByName = "scriptsMapping")
     @Mapping(source = "dependencies", target = "dependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "devDependencies", target = "devDependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "peerDependencies", target = "peerDependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "engines", target = "engines", qualifiedByName = "engineMapping")
     PackageDescriptor toDescriptor(Package value, @Context Scanner scanner);
+
+    PackageMapper INSTANCE = getMapper(PackageMapper.class);
 
     @Named("scriptsMapping")
     default List<ScriptDescriptor> scriptsMapping(Map<String, String> sourceField, @Context Scanner scanner) {
