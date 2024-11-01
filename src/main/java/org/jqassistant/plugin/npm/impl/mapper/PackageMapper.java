@@ -20,7 +20,7 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.mapstruct.factory.Mappers.getMapper;
 
-@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class})
+@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class})
 public interface PackageMapper extends DescriptorMapper<Package, PackageDescriptor> {
 
     @Override

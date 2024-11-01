@@ -29,6 +29,13 @@
       "url": "https://example.com/users/test3"
     }
   ],
+  "funding": [
+    {
+      "type": "fundingX",
+      "url": "funding-x.com"
+    },
+    "funding-y.com"
+  ],
   "files": [
     "dist/"
   ],

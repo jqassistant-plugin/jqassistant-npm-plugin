@@ -53,6 +53,9 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
     @Relation("HAS_CONTRIBUTOR")
     List<PersonDescriptor> getContributors();
 
+    @Relation("HAS_FUNDING")
+    List<FundingDescriptor> getFunding();
+
     @Relation("DECLARES_SCRIPT")
     List<ScriptDescriptor> getScripts();
 

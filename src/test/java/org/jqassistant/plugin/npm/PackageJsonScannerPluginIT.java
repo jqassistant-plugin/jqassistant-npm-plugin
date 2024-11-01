@@ -55,6 +55,15 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         verifyPerson(contributorsByName.get("Test User 2"), "Test User 2", "test2@example.com", "https://example.com/users/test2");
         verifyPerson(contributorsByName.get("Test User 3"), "Test User 3", "test3@example.com", "https://example.com/users/test3");
 
+        List<FundingDescriptor> funding = packageJson.getFunding();
+        assertThat(funding).hasSize(2);
+        Map<String, FundingDescriptor> fundingByType = funding.stream()
+            .collect(toMap(FundingDescriptor::getType, fundingDescriptor -> fundingDescriptor));
+        assertThat(fundingByType.get("fundingX")).isNotNull();
+        assertThat(fundingByType.get("fundingX").getUrl()).isEqualTo("funding-x.com");
+        assertThat(fundingByType.get("url")).isNotNull();
+        assertThat(fundingByType.get("url").getUrl()).isEqualTo("funding-y.com");
+
         assertThat(packageJson.getFiles()).isEqualTo(new String[] { "dist/" });
         assertThat(packageJson.getMain()).isEqualTo("test.js");
 

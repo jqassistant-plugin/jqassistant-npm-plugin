@@ -35,6 +35,8 @@ public class Package {
 
     private List<Person> contributors;
 
+    private List<Funding> funding;
+
     private String[] files;
 
     private String main;

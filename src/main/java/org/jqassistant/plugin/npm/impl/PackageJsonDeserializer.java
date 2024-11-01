@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.jqassistant.plugin.npm.impl.model.Bugs;
+import org.jqassistant.plugin.npm.impl.model.Funding;
 import org.jqassistant.plugin.npm.impl.model.Package;
 import org.jqassistant.plugin.npm.impl.model.Person;
 
@@ -44,6 +45,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "license": result.setLicense(deserializeStringProperty("license", valueNode)); break;
                     case "author": result.setAuthor(deserializePersonProperty("author", valueNode)); break;
                     case "contributors": result.setContributors(deserializeContributorsProperty(valueNode)); break;
+                    case "funding": result.setFunding(deserializeFundingProperty(valueNode)); break;
                     case "files": result.setFiles(deserializeStringArrayProperty("files", valueNode)); break;
                     case "main": result.setMain(deserializeStringProperty("main", valueNode)); break;
                     case "scripts": result.setScripts(deserializeStringMap("scripts", valueNode)); break;
@@ -173,6 +175,50 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
             return result;
         } else {
             log.error("property bugs is not an object");
+        }
+        return null;
+    }
+
+    private List<Funding> deserializeFundingProperty(JsonNode node) {
+        List<Funding> result = new ArrayList<>();
+        if(node.isArray()) {
+            int index = 0;
+            for (var it = node.elements(); it.hasNext(); index++) {
+                JsonNode elem = it.next();
+                Funding f = deserializeFundingObject("funding[" + index + "]", elem);
+                if(f != null) {
+                    result.add(f);
+                }
+            }
+        } else if(node.isObject() || node.isTextual()) {
+            Funding f = deserializeFundingObject("funding", node);
+            if(f != null) {
+                result.add(f);
+            }
+        }else {
+            log.error("property funding is not an array");
+        }
+        return result;
+    }
+
+    private Funding deserializeFundingObject(String propertyName, JsonNode node) {
+        if(node.isObject()) {
+            Funding result = new Funding();
+            node.fields().forEachRemaining(entry -> {
+                switch (entry.getKey()) {
+                    case "type": result.setType(deserializeStringProperty("funding.type", entry.getValue())); break;
+                    case "url": result.setUrl(deserializeStringProperty("funding.url", entry.getValue())); break;
+                    default: log.error("object content of {} does contain unknown property ({})", propertyName, entry.getKey());
+                }
+            });
+            return result;
+        } else if(node.isTextual()) {
+            Funding result = new Funding();
+            result.setType("url");
+            result.setUrl(node.asText());
+            return result;
+        } else {
+            log.error("property {} is neither represented through a string nor an object", propertyName);
         }
         return null;
     }
