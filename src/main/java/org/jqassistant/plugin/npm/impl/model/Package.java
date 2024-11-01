@@ -41,6 +41,8 @@ public class Package {
 
     private String main;
 
+    private String browser;
+
     private Map<String, String> scripts;
 
     private Map<String, String> dependencies;

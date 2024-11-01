@@ -40,6 +40,10 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
 
     void setMain(String main);
 
+    String getBrowser();
+
+    void setBrowser(String browser);
+
     @Relation("HAS_BUG_TRACKER")
     BugTrackerDescriptor getBugTracker();
 

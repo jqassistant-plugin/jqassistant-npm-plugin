@@ -66,6 +66,7 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
 
         assertThat(packageJson.getFiles()).isEqualTo(new String[] { "dist/" });
         assertThat(packageJson.getMain()).isEqualTo("test.js");
+        assertThat(packageJson.getBrowser()).isEqualTo("test2.js");
 
         Map<String, String> scriptsByName = packageJson.getScripts()
             .stream()

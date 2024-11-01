@@ -48,6 +48,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "funding": result.setFunding(deserializeFundingProperty(valueNode)); break;
                     case "files": result.setFiles(deserializeStringArrayProperty("files", valueNode)); break;
                     case "main": result.setMain(deserializeStringProperty("main", valueNode)); break;
+                    case "browser": result.setBrowser(deserializeStringProperty("browser", valueNode)); break;
                     case "scripts": result.setScripts(deserializeStringMap("scripts", valueNode)); break;
                     case "dependencies": result.setDependencies(deserializeStringMap("dependencies", valueNode)); break;
                     case "devDependencies": result.setDevDependencies(deserializeStringMap("devDependencies", valueNode)); break;

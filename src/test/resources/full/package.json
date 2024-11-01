@@ -40,6 +40,7 @@
     "dist/"
   ],
   "main": "test.js",
+  "browser": "test2.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"
