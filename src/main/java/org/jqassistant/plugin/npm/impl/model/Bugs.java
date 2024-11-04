@@ -8,6 +8,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Bugs {
+
     private String email;
+
     private String url;
+
 }

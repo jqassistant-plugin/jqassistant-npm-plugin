@@ -8,6 +8,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Funding {
-    String type;
-    String url;
+
+    private String type;
+
+    private String url;
+
 }

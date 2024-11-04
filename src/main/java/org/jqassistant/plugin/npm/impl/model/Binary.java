@@ -9,8 +9,8 @@ import lombok.ToString;
 @ToString
 public class Binary {
 
-    String name;
+    private String name;
 
-    String path;
+    private String path;
 
 }
