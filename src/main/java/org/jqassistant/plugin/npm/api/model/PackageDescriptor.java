@@ -44,6 +44,9 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
 
     void setBrowser(String browser);
 
+    @Relation("HAS_BINARY")
+    List<BinaryDescriptor> getBinaries();
+
     @Relation("HAS_BUG_TRACKER")
     BugTrackerDescriptor getBugTracker();
 

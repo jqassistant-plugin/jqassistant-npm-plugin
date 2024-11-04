@@ -68,6 +68,15 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(packageJson.getMain()).isEqualTo("test.js");
         assertThat(packageJson.getBrowser()).isEqualTo("test2.js");
 
+        assertThat(packageJson.getBinaries()).hasSize(2);
+        Map<String, String> binByName = packageJson.getBinaries()
+            .stream()
+            .collect(toMap(BinaryDescriptor::getName, BinaryDescriptor::getPath));
+        assertThat(binByName)
+            .containsEntry("bin1", "script1.js")
+            .containsEntry("bin2", "script2.js");
+
+
         Map<String, String> scriptsByName = packageJson.getScripts()
             .stream()
             .collect(toMap(NamedDescriptor::getName, ScriptDescriptor::getScript));
@@ -102,6 +111,21 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
     }
 
     @Test
+    void invalidProperties() {
+        File file = new File(getClassesDirectory(PackageJsonScannerPluginIT.class), "invalid-properties/package.json");
+
+        PackageDescriptor packageJson = getScanner().scan(file, "/invalid-properties/package.json", DefaultScope.NONE);
+
+        store.beginTransaction();
+
+        assertThat(packageJson).isNotNull();
+        assertThat(packageJson.getName()).isEqualTo("invalid-properties");
+        assertThat(packageJson.getVersion()).isNull();
+
+        store.commitTransaction();
+    }
+
+    @Test
     void authorAsString() {
         File file = new File(getClassesDirectory(PackageJsonScannerPluginIT.class), "person-strings/package.json");
 
@@ -124,25 +148,27 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         store.commitTransaction();
     }
 
-    @Test
-    void invalidProperties() {
-        File file = new File(getClassesDirectory(PackageJsonScannerPluginIT.class), "invalid-properties/package.json");
-
-        PackageDescriptor packageJson = getScanner().scan(file, "/invalid-properties/package.json", DefaultScope.NONE);
-
-        store.beginTransaction();
-
-        assertThat(packageJson).isNotNull();
-        assertThat(packageJson.getName()).isEqualTo("invalid-properties");
-        assertThat(packageJson.getVersion()).isNull();
-
-        store.commitTransaction();
-    }
-
     private static void verifyPerson(PersonDescriptor personDescriptor, String expectedName, String expectedEmail, String expectedUrl) {
         assertThat(personDescriptor).isNotNull();
         assertThat(personDescriptor.getName()).isEqualTo(expectedName);
         assertThat(personDescriptor.getEmail()).isEqualTo(expectedEmail);
         assertThat(personDescriptor.getUrl()).isEqualTo(expectedUrl);
+    }
+
+    @Test
+    void binAsString() {
+        File file = new File(getClassesDirectory(PackageJsonScannerPluginIT.class), "bin-string/package.json");
+
+        PackageDescriptor packageJson = getScanner().scan(file, "/bin-string/package.json", DefaultScope.NONE);
+
+        store.beginTransaction();
+        assertThat(packageJson).isNotNull();
+
+        assertThat(packageJson.getBinaries()).hasSize(1);
+        BinaryDescriptor bin = packageJson.getBinaries().get(0);
+        assertThat(bin.getName()).isEqualTo("jqa-npm-test");
+        assertThat(bin.getPath()).isEqualTo("bin/script.js");
+
+        store.commitTransaction();
     }
 }

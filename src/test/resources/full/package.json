@@ -41,6 +41,10 @@
   ],
   "main": "test.js",
   "browser": "test2.js",
+  "bin": {
+    "bin1": "script1.js",
+    "bin2": "script2.js"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"

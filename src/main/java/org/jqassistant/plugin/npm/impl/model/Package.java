@@ -19,6 +19,7 @@ import java.util.Map;
 public class Package {
 
     private String name;
+
     private String version;
 
     private String description;
@@ -42,6 +43,8 @@ public class Package {
     private String main;
 
     private String browser;
+
+    private List<Binary> bin;
 
     private Map<String, String> scripts;
 

@@ -5,10 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
-import org.jqassistant.plugin.npm.impl.model.Bugs;
-import org.jqassistant.plugin.npm.impl.model.Funding;
 import org.jqassistant.plugin.npm.impl.model.Package;
-import org.jqassistant.plugin.npm.impl.model.Person;
+import org.jqassistant.plugin.npm.impl.model.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,6 +47,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "files": result.setFiles(deserializeStringArrayProperty("files", valueNode)); break;
                     case "main": result.setMain(deserializeStringProperty("main", valueNode)); break;
                     case "browser": result.setBrowser(deserializeStringProperty("browser", valueNode)); break;
+                    case "bin": result.setBin(deserializeBinProperty(valueNode)); break;
                     case "scripts": result.setScripts(deserializeStringMap("scripts", valueNode)); break;
                     case "dependencies": result.setDependencies(deserializeStringMap("dependencies", valueNode)); break;
                     case "devDependencies": result.setDevDependencies(deserializeStringMap("devDependencies", valueNode)); break;
@@ -197,7 +196,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                 result.add(f);
             }
         }else {
-            log.error("property funding is not an array");
+            log.error("property funding is neither an array, an object, nor a string");
         }
         return result;
     }
@@ -222,6 +221,31 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
             log.error("property {} is neither represented through a string nor an object", propertyName);
         }
         return null;
+    }
+
+    private List<Binary> deserializeBinProperty(JsonNode node) {
+        List<Binary> result = new ArrayList<>();
+        if(node.isObject()) {
+            node.fields().forEachRemaining(entry -> {
+                JsonNode value = entry.getValue();
+                if(value.isTextual()) {
+                    Binary b = new Binary();
+                    b.setName(entry.getKey());
+                    b.setPath(value.asText());
+                    result.add(b);
+                } else {
+                    log.error("content of bin.{} is not a string", entry.getKey());
+                }
+            });
+        } else if(node.isTextual()) {
+            Binary b = new Binary();
+            b.setName(null); // resolve this to package name later
+            b.setPath(node.asText());
+            result.add(b);
+        }else {
+            log.error("property bin is neither an object nor a string");
+        }
+        return result;
     }
 
 }
