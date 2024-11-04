@@ -61,6 +61,11 @@
     "tea": "2.x",
     "soy-milk": "1.2"
   },
+  "peerDependenciesMeta": {
+    "soy-milk": {
+      "optional": true
+    }
+  },
   "engines": {
     "node": ">=14",
     "npm": ">=6"

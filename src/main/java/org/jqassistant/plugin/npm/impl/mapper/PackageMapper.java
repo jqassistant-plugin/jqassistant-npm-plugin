@@ -20,7 +20,8 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.mapstruct.factory.Mappers.getMapper;
 
-@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class, BinaryMapper.class})
+@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class, BinaryMapper.class},
+    unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface PackageMapper extends DescriptorMapper<Package, PackageDescriptor> {
 
     PackageMapper INSTANCE = getMapper(PackageMapper.class);
@@ -40,6 +41,16 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
         // resolve string binary name to package name
         if(target.getName() != null) {
             target.getBinaries().stream().filter(b -> b.getName() == null) .forEach(b -> b.setName(target.getName()));
+        }
+
+        // resolve peerDependenciesMeta
+        if(type.getPeerDependenciesMeta() != null) {
+            type.getPeerDependenciesMeta()
+                .forEach((depName, optional) -> target.getPeerDependencies()
+                    .stream()
+                    .filter(dep -> dep.getName().equals(depName))
+                    .forEach(dep -> dep.setOptional(optional))
+                );
         }
     }
 

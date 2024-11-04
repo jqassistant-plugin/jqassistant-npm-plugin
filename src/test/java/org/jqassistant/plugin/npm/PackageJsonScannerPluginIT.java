@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -95,11 +96,14 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(devDependenciesByName).containsEntry("@lingui/cli", "^3.4.0")
             .containsEntry("@lingui/macro", "^3.4.0");
 
-        Map<String, String> peerDependenciesByName = packageJson.getPeerDependencies()
+        Map<String, DependencyDescriptor> peerDependenciesByName = packageJson.getPeerDependencies()
             .stream()
-            .collect(toMap(NamedDescriptor::getName, DependencyDescriptor::getVersionRange));
-        assertThat(peerDependenciesByName).containsEntry("tea", "2.x")
-            .containsEntry("soy-milk", "1.2");
+            .collect(toMap(NamedDescriptor::getName, Function.identity()));
+        assertThat(peerDependenciesByName.get("tea")).isNotNull();
+        assertThat(peerDependenciesByName.get("tea").getVersionRange()).isEqualTo("2.x");
+        assertThat(peerDependenciesByName.get("soy-milk")).isNotNull();
+        assertThat(peerDependenciesByName.get("soy-milk").getVersionRange()).isEqualTo("1.2");
+        assertThat(peerDependenciesByName.get("soy-milk").getOptional()).isTrue();
 
         Map<String, String> enginesByName = packageJson.getEngines()
             .stream()

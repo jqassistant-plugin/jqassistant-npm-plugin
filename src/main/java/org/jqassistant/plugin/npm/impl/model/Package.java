@@ -54,6 +54,8 @@ public class Package {
 
     private Map<String, String> peerDependencies;
 
+    private Map<String, Boolean> peerDependenciesMeta;
+
     private Map<String, String> engines;
 
 }

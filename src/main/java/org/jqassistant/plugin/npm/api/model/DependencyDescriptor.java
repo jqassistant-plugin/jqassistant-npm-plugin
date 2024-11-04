@@ -13,4 +13,8 @@ public interface DependencyDescriptor extends NPMDescriptor, NamedDescriptor {
 
     void setVersionRange(String versionRange);
 
+    Boolean getOptional();
+
+    void setOptional(Boolean optional);
+
 }

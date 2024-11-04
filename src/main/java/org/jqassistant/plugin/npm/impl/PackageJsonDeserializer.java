@@ -52,6 +52,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "dependencies": result.setDependencies(deserializeStringMap("dependencies", valueNode)); break;
                     case "devDependencies": result.setDevDependencies(deserializeStringMap("devDependencies", valueNode)); break;
                     case "peerDependencies": result.setPeerDependencies(deserializeStringMap("peerDependencies", valueNode)); break;
+                    case "peerDependenciesMeta": result.setPeerDependenciesMeta(deserializePeerDependenciesMetaProperty(valueNode)); break;
                     case "engines": result.setEngines(deserializeStringMap("engines", valueNode)); break;
                     default: log.error("Encountered unknown top-level property in package.json ({})", packageJsonProperty.getKey());
                 }
@@ -244,6 +245,34 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
             result.add(b);
         }else {
             log.error("property bin is neither an object nor a string");
+        }
+        return result;
+    }
+
+    private Map<String, Boolean> deserializePeerDependenciesMetaProperty(JsonNode node) {
+        Map<String, Boolean> result = new HashMap<>();
+        if(node.isObject()) {
+            node.fields().forEachRemaining(dependencyField -> {
+                JsonNode dependencyFieldValue = dependencyField.getValue();
+                if(dependencyFieldValue.isObject()) {
+                    dependencyFieldValue.fields().forEachRemaining(dependencyMetaEntry -> {
+                        JsonNode dependencyMetaEntryValue = dependencyMetaEntry.getValue();
+                       if(dependencyMetaEntry.getKey().equals("optional")) {
+                           if(dependencyMetaEntryValue.isBoolean()) {
+                               result.put(dependencyField.getKey(), dependencyMetaEntryValue.booleanValue());
+                           } else {
+                               log.error("Property peerDependenciesMeta.{}.optional is not a boolean", dependencyField.getKey());
+                           }
+                       } else {
+                           log.error("Property peerDependenciesMeta.{} does contain unknown property ({})", dependencyField.getKey(), dependencyMetaEntry.getKey());
+                       }
+                    });
+                } else {
+                    log.error("Property peerDependenciesMeta.{} is not an object", dependencyField.getKey());
+                }
+            });
+        } else {
+            log.error("property peerDependenciesMeta is not an object");
         }
         return result;
     }
