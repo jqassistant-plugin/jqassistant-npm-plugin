@@ -56,6 +56,8 @@ public class Package {
 
     private Map<String, Boolean> peerDependenciesMeta;
 
+    private BundleDependencies bundleDependencies;
+
     private Map<String, String> engines;
 
 }

@@ -53,6 +53,8 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "devDependencies": result.setDevDependencies(deserializeStringMap("devDependencies", valueNode)); break;
                     case "peerDependencies": result.setPeerDependencies(deserializeStringMap("peerDependencies", valueNode)); break;
                     case "peerDependenciesMeta": result.setPeerDependenciesMeta(deserializePeerDependenciesMetaProperty(valueNode)); break;
+                    case "bundleDependencies": // both bundleDependencies and bundledDependencies are allowed
+                    case "bundledDependencies": result.setBundleDependencies(deserializeBundleDependenciesProperty(valueNode)); break;
                     case "engines": result.setEngines(deserializeStringMap("engines", valueNode)); break;
                     default: log.error("Encountered unknown top-level property in package.json ({})", packageJsonProperty.getKey());
                 }
@@ -273,6 +275,26 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
             });
         } else {
             log.error("property peerDependenciesMeta is not an object");
+        }
+        return result;
+    }
+
+    private BundleDependencies deserializeBundleDependenciesProperty(JsonNode node) {
+        BundleDependencies result = new BundleDependencies();
+        if(node.isBoolean()) {
+            result.setAllBundled(node.asBoolean());
+        } else if(node.isArray()) {
+            int index = 0;
+            for (var it = node.elements(); it.hasNext(); index++) {
+                JsonNode elem = it.next();
+                if(elem.isTextual()) {
+                    result.getDependencies().add(elem.textValue());
+                } else {
+                    log.error("property bundleDependencies[{}] is not a string", index);
+                }
+            }
+        } else {
+            log.error("property bundleDependencies is neither an array nor a boolean");
         }
         return result;
     }

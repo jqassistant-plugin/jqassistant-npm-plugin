@@ -75,6 +75,9 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
     @Relation("DECLARES_PEER_DEPENDENCY")
     List<DependencyDescriptor> getPeerDependencies();
 
+    @Relation("HAS_BUNDLED_DEPENDENCY")
+    List<DependencyDescriptor> getBundledDependencies();
+
     @Relation("DECLARES_ENGINE")
     List<EngineDescriptor> getEngines();
 }

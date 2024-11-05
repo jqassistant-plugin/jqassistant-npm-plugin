@@ -105,6 +105,10 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(peerDependenciesByName.get("soy-milk").getVersionRange()).isEqualTo("1.2");
         assertThat(peerDependenciesByName.get("soy-milk").getOptional()).isTrue();
 
+        assertThat(packageJson.getBundledDependencies()).hasSize(1);
+        assertThat(packageJson.getBundledDependencies().get(0).getName()).isEqualTo("react-dom");
+        assertThat(packageJson.getBundledDependencies().get(0).getVersionRange()).isEqualTo("^17.0.2");
+
         Map<String, String> enginesByName = packageJson.getEngines()
             .stream()
             .collect(toMap(NamedDescriptor::getName, EngineDescriptor::getVersionRange));

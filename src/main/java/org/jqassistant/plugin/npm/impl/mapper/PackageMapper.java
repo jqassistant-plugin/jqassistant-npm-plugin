@@ -33,24 +33,40 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Mapping(source = "dependencies", target = "dependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "devDependencies", target = "devDependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "peerDependencies", target = "peerDependencies", qualifiedByName = "dependencyMapping")
+    @Mapping(target = "bundledDependencies", ignore = true)
     @Mapping(source = "engines", target = "engines", qualifiedByName = "engineMapping")
     PackageDescriptor toDescriptor(Package value, @Context Scanner scanner);
 
     @AfterMapping
-    default void after(Package type, @MappingTarget PackageDescriptor target, @Context Scanner scanner) {
+    default void after(Package source, @MappingTarget PackageDescriptor target, @Context Scanner scanner) {
         // resolve string binary name to package name
         if(target.getName() != null) {
             target.getBinaries().stream().filter(b -> b.getName() == null) .forEach(b -> b.setName(target.getName()));
         }
 
         // resolve peerDependenciesMeta
-        if(type.getPeerDependenciesMeta() != null) {
-            type.getPeerDependenciesMeta()
+        if(source.getPeerDependenciesMeta() != null) {
+            source.getPeerDependenciesMeta()
                 .forEach((depName, optional) -> target.getPeerDependencies()
                     .stream()
                     .filter(dep -> dep.getName().equals(depName))
                     .forEach(dep -> dep.setOptional(optional))
                 );
+        }
+
+        // resolve bundledDependencies
+        if(source.getBundleDependencies() != null) {
+            if(Boolean.TRUE.equals(source.getBundleDependencies().getAllBundled())) {
+                target.getBundledDependencies().addAll(target.getDependencies());
+            } else {
+                source.getBundleDependencies().getDependencies().forEach(depName ->
+                    target.getDependencies()
+                    .stream()
+                    .filter(dep -> dep.getName().equals(depName))
+                    .findFirst()
+                    .ifPresent(target.getBundledDependencies()::add)
+                );
+            }
         }
     }
 

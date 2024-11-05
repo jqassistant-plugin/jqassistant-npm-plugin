@@ -66,6 +66,9 @@
       "optional": true
     }
   },
+  "bundleDependencies": [
+    "react-dom"
+  ],
   "engines": {
     "node": ">=14",
     "npm": ">=6"
