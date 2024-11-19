@@ -55,7 +55,9 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "peerDependenciesMeta": result.setPeerDependenciesMeta(deserializePeerDependenciesMetaProperty(valueNode)); break;
                     case "bundleDependencies": // both bundleDependencies and bundledDependencies are allowed
                     case "bundledDependencies": result.setBundleDependencies(deserializeBundleDependenciesProperty(valueNode)); break;
+                    case "optionalDependencies": result.setOptionalDependencies(deserializeStringMap("optionalDependencies", valueNode)); break;
                     case "engines": result.setEngines(deserializeStringMap("engines", valueNode)); break;
+                    case "os": result.setOs(deserializeStringArrayProperty("os", valueNode)); break;
                     default: log.error("Encountered unknown top-level property in package.json ({})", packageJsonProperty.getKey());
                 }
             });

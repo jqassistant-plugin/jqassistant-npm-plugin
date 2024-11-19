@@ -58,6 +58,10 @@ public class Package {
 
     private BundleDependencies bundleDependencies;
 
+    private Map<String, String> optionalDependencies;
+
     private Map<String, String> engines;
+
+    private String[] os;
 
 }

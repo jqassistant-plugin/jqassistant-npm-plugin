@@ -5,22 +5,22 @@ import com.buschmais.jqassistant.core.store.api.Store;
 import com.buschmais.jqassistant.plugin.common.api.mapper.DescriptorMapper;
 import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
 import com.buschmais.jqassistant.plugin.json.api.model.JSONFileDescriptor;
-import org.jqassistant.plugin.npm.api.model.DependencyDescriptor;
-import org.jqassistant.plugin.npm.api.model.EngineDescriptor;
-import org.jqassistant.plugin.npm.api.model.PackageDescriptor;
-import org.jqassistant.plugin.npm.api.model.ScriptDescriptor;
+import org.jqassistant.plugin.npm.api.model.*;
 import org.jqassistant.plugin.npm.impl.model.Package;
 import org.mapstruct.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.mapstruct.factory.Mappers.getMapper;
 
-@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class, BinaryMapper.class},
+@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class, BinaryMapper.class, OsMapper.class},
     unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface PackageMapper extends DescriptorMapper<Package, PackageDescriptor> {
 
@@ -33,6 +33,7 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Mapping(source = "dependencies", target = "dependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "devDependencies", target = "devDependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "peerDependencies", target = "peerDependencies", qualifiedByName = "dependencyMapping")
+    @Mapping(source = "os", target = "os", qualifiedByName = "osMapping")
     @Mapping(target = "bundledDependencies", ignore = true)
     @Mapping(source = "engines", target = "engines", qualifiedByName = "engineMapping")
     PackageDescriptor toDescriptor(Package value, @Context Scanner scanner);
@@ -40,12 +41,12 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @AfterMapping
     default void after(Package source, @MappingTarget PackageDescriptor target, @Context Scanner scanner) {
         // resolve string binary name to package name
-        if(target.getName() != null) {
-            target.getBinaries().stream().filter(b -> b.getName() == null) .forEach(b -> b.setName(target.getName()));
+        if (target.getName() != null) {
+            target.getBinaries().stream().filter(b -> b.getName() == null).forEach(b -> b.setName(target.getName()));
         }
 
         // resolve peerDependenciesMeta
-        if(source.getPeerDependenciesMeta() != null) {
+        if (source.getPeerDependenciesMeta() != null) {
             source.getPeerDependenciesMeta()
                 .forEach((depName, optional) -> target.getPeerDependencies()
                     .stream()
@@ -68,6 +69,24 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
                 );
             }
         }
+        // resolve optionalDependencies - already defined dependencies defined as optionalDependencies will be overridden
+        if (source.getOptionalDependencies() != null) {
+            List<DependencyDescriptor> descriptors = new ArrayList<>();
+            for (Map.Entry<String, String> optionalDependency : source.getOptionalDependencies().entrySet()) {
+                for (DependencyDescriptor dependency : target.getDependencies()) {
+                    if (optionalDependency.getKey().equals(dependency.getName())) {
+                        target.getDependencies().remove(dependency);
+                    }
+                }
+                Store store = scanner.getContext().getStore();
+                DependencyDescriptor descriptor = store.create(DependencyDescriptor.class);
+                descriptor.setName(optionalDependency.getKey());
+                descriptor.setVersionRange(optionalDependency.getValue());
+                descriptor.setOptional(TRUE);
+                descriptors.add(descriptor);
+            }
+            target.getDependencies().addAll(descriptors);
+        }
     }
 
     @Named("scriptsMapping")
@@ -83,6 +102,26 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Named("engineMapping")
     default List<EngineDescriptor> engineMapping(Map<String, String> sourceField, @Context Scanner scanner) {
         return mapMapProperty(sourceField, EngineDescriptor.class, EngineDescriptor::setVersionRange, scanner);
+    }
+
+    @Named("osMapping")
+    default List<OsDescriptor> osMapping(String[] sourceField, @Context Scanner scanner) {
+        if (sourceField != null) {
+            return Arrays.stream(sourceField)
+                .map(os -> {
+                    OsDescriptor descriptor = scanner.getContext().getStore().create(OsDescriptor.class);
+                    if (os.startsWith("!")) {
+                        descriptor.setType("blocked");
+                        descriptor.setName(os.substring(1));
+                    } else {
+                        descriptor.setType("supported");
+                        descriptor.setName(os);
+                    }
+                    return descriptor;
+                })
+                .collect(toList());
+        }
+        return emptyList();
     }
 
     static <T extends NamedDescriptor> List<T> mapMapProperty(Map<String, String> map, Class<T> descriptorType, BiConsumer<T, String> valueConsumer, Scanner scanner) {

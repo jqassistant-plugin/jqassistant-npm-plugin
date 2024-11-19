@@ -84,11 +84,21 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(scriptsByName).containsEntry("start", "react-scripts start")
             .containsEntry("build", "react-scripts build");
 
-        Map<String, String> dependenciesByName = packageJson.getDependencies()
+        Map<String, DependencyDescriptor> dependenciesByName = packageJson.getDependencies()
             .stream()
-            .collect(toMap(NamedDescriptor::getName, DependencyDescriptor::getVersionRange));
-        assertThat(dependenciesByName).containsEntry("react", "^17.0.2")
-            .containsEntry("react-dom", "^17.0.2");
+            .collect(toMap(NamedDescriptor::getName, Function.identity()));
+        assertThat(dependenciesByName.get("react")).isNotNull();
+        assertThat(dependenciesByName.get("react").getVersionRange()).endsWith("^17.0.2");
+        assertThat(dependenciesByName.get("react-dom")).isNotNull();
+        assertThat(dependenciesByName.get("react-dom").getVersionRange()).endsWith("^17.0.2");
+        assertThat(dependenciesByName.get("foo")).isNotNull();
+        assertThat(dependenciesByName.get("foo").getVersionRange()).endsWith("3.0.0 - 2.9999.9999");
+        assertThat(dependenciesByName.get("foo").getOptional()).isTrue();
+        assertThat(dependenciesByName.get("colors")).isNotNull();
+        assertThat(dependenciesByName.get("colors").getVersionRange()).endsWith("^1.4.0");
+        assertThat(dependenciesByName.get("colors").getOptional()).isTrue();
+
+
 
         Map<String, String> devDependenciesByName = packageJson.getDevDependencies()
             .stream()
@@ -108,6 +118,16 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(packageJson.getBundledDependencies()).hasSize(1);
         assertThat(packageJson.getBundledDependencies().get(0).getName()).isEqualTo("react-dom");
         assertThat(packageJson.getBundledDependencies().get(0).getVersionRange()).isEqualTo("^17.0.2");
+
+        Map<String, OsDescriptor> osByName = packageJson.getOs()
+            .stream()
+            .collect(toMap(NamedDescriptor::getName, Function.identity()));
+        assertThat(osByName.get("darwin")).isNotNull();
+        assertThat(osByName.get("darwin").getType()).isEqualTo("supported");
+        assertThat(osByName.get("linux")).isNotNull();
+        assertThat(osByName.get("linux").getType()).isEqualTo("blocked");
+        assertThat(osByName.get("win32")).isNotNull();
+        assertThat(osByName.get("win32").getType()).isEqualTo("supported");
 
         Map<String, String> enginesByName = packageJson.getEngines()
             .stream()

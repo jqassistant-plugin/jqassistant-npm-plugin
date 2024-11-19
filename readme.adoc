@@ -69,7 +69,9 @@ Represents a `package.json` file.
 | DECLARES_DEPENDENCY      | <<:NPM:Dependency>> | 0..*        | References a dependency declared in the package.
 | DECLARES_DEV_DEPENDENCY  | <<:NPM:Dependency>> | 0..*        | References a dev dependency declared in the package.
 | DECLARES_PEER_DEPENDENCY | <<:NPM:Dependency>> | 0..*        | References a peer dependency declared in the package.
+| HAS_BUNDLED_DEPENDENCY   | <<:NPM:Dependency>> | 0..*        | References bundled dependencies declared in the package.
 | DECLARES_ENGINE          | <<:NPM:Engine>>     | 0..*        | References an engine declared in the package.
+| DECLARES_OS              | <<:NPM:Os>>         | 0..*        | References supported and blocked operating systems.
 |===
 
 [[:NPM:Person]]
@@ -123,4 +125,14 @@ Represents an engine with name and version.
 | Name   | Description
 | name   | The name of the engine.
 | engine | The engine version.
+|===
+
+[[:NPM:Os]]
+==== :NPM:Os
+[options=header]
+.Properties of :NPM:Os
+|===
+| Name   | Description
+| name   | The name of the os.
+| type   | The type of the os, either supported or blocked.
 |===

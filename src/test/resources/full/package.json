@@ -51,7 +51,8 @@
   },
   "dependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "foo": "1.0.0 - 2.9999.9999"
   },
   "devDependencies": {
     "@lingui/cli": "^3.4.0",
@@ -69,14 +70,23 @@
   "bundleDependencies": [
     "react-dom"
   ],
+  "optionalDependencies": {
+    "colors": "^1.4.0",
+    "foo": "3.0.0 - 2.9999.9999"
+  },
   "engines": {
     "node": ">=14",
     "npm": ">=6"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  }
+  "os": [
+    "darwin",
+    "!linux",
+    "win32"
+  ],
+"eslintConfig": {
+"extends": [
+"react-app",
+"react-app/jest"
+]
+}
 }

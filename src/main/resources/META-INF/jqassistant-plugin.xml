@@ -13,6 +13,7 @@
         <class>org.jqassistant.plugin.npm.api.model.ScriptDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.DependencyDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.EngineDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.OsDescriptor</class>
     </model>
     <scanner>
         <class>org.jqassistant.plugin.npm.impl.PackageJsonScannerPlugin</class>
