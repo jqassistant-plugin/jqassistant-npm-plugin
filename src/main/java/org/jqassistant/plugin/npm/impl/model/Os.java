@@ -11,6 +11,6 @@ public class Os {
 
     private String name;
 
-    private String osType;
+    private String type;
 
 }
