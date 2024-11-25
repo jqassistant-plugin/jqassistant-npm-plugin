@@ -9,13 +9,11 @@ import org.jqassistant.plugin.npm.api.model.*;
 import org.jqassistant.plugin.npm.impl.model.Package;
 import org.mapstruct.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.mapstruct.factory.Mappers.getMapper;
@@ -69,23 +67,26 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
                 );
             }
         }
-        // resolve optionalDependencies - already defined dependencies defined as optionalDependencies will be overridden
+        // resolve optionalDependencies - already defined dependencies that are also defined in optionalDependencies will be overridden
         if (source.getOptionalDependencies() != null) {
-            List<DependencyDescriptor> descriptors = new ArrayList<>();
-            for (Map.Entry<String, String> optionalDependency : source.getOptionalDependencies().entrySet()) {
-                for (DependencyDescriptor dependency : target.getDependencies()) {
-                    if (optionalDependency.getKey().equals(dependency.getName())) {
-                        target.getDependencies().remove(dependency);
-                    }
-                }
-                Store store = scanner.getContext().getStore();
-                DependencyDescriptor descriptor = store.create(DependencyDescriptor.class);
-                descriptor.setName(optionalDependency.getKey());
-                descriptor.setVersionRange(optionalDependency.getValue());
-                descriptor.setOptional(TRUE);
-                descriptors.add(descriptor);
-            }
-            target.getDependencies().addAll(descriptors);
+            source.getOptionalDependencies().forEach((key, value) ->
+                target.getDependencies().stream()
+                .filter(dep -> dep.getName().equals(key))
+                .findFirst()
+                .ifPresentOrElse(depToUpdate -> {
+                    // mark existing dependency as optional and override version range
+                    depToUpdate.setOptional(true);
+                    depToUpdate.setVersionRange(value);
+                }, () -> {
+                    // add new optional dependency
+                    Store store = scanner.getContext().getStore();
+                    DependencyDescriptor descriptor = store.create(DependencyDescriptor.class);
+                    descriptor.setName(key);
+                    descriptor.setVersionRange(value);
+                    descriptor.setOptional(true);
+                    target.getDependencies().add(descriptor);
+                })
+            );
         }
     }
 

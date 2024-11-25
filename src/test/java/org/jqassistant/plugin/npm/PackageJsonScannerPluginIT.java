@@ -99,7 +99,6 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(dependenciesByName.get("colors").getOptional()).isTrue();
 
 
-
         Map<String, String> devDependenciesByName = packageJson.getDevDependencies()
             .stream()
             .collect(toMap(NamedDescriptor::getName, DependencyDescriptor::getVersionRange));
