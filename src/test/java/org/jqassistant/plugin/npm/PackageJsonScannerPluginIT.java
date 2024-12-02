@@ -128,6 +128,14 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(osByName.get("win32")).isNotNull();
         assertThat(osByName.get("win32").getType()).isEqualTo("supported");
 
+        Map<String, String> overridesByName = packageJson.getOverrides()
+            .stream()
+            .collect(toMap(NamedDescriptor::getName, OverridesDescriptor::getVersion));
+        assertThat(overridesByName).hasSize(7);
+        assertThat(overridesByName).containsEntry("moo", "1.0.0").containsEntry("boo", "2.0.0")
+            .containsEntry("boo/bar", "4.0.0").containsEntry("dar/doo", "6.0.0").containsEntry("baz/boz/biz", "7.0.0")
+            .containsEntry("lar@2.0.0/loo", "8.0.0").containsEntry("soo", "3.0.0 - 2.9999.9999");
+
         Map<String, String> enginesByName = packageJson.getEngines()
             .stream()
             .collect(toMap(NamedDescriptor::getName, EngineDescriptor::getVersionRange));

@@ -74,6 +74,25 @@
     "colors": "^1.4.0",
     "foo": "3.0.0 - 2.9999.9999"
   },
+  "overrides": {
+    "moo": "1.0.0",
+    "boo": {
+      ".": "2.0.0",
+      "bar": "4.0.0"
+    },
+    "dar": {
+      "doo": "6.0.0"
+    },
+    "baz": {
+      "boz": {
+        "biz": "7.0.0"
+      }
+    },
+    "lar@2.0.0": {
+      "loo": "8.0.0"
+    },
+    "soo": "$foo"
+  },
   "engines": {
     "node": ">=14",
     "npm": ">=6"
@@ -83,10 +102,10 @@
     "!linux",
     "win32"
   ],
-"eslintConfig": {
-"extends": [
-"react-app",
-"react-app/jest"
-]
-}
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  }
 }

@@ -31,6 +31,7 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Mapping(source = "dependencies", target = "dependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "devDependencies", target = "devDependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "peerDependencies", target = "peerDependencies", qualifiedByName = "dependencyMapping")
+    @Mapping(source = "overrides", target = "overrides", qualifiedByName = "overridesMapping")
     @Mapping(source = "os", target = "os", qualifiedByName = "osMapping")
     @Mapping(target = "bundledDependencies", ignore = true)
     @Mapping(source = "engines", target = "engines", qualifiedByName = "engineMapping")
@@ -88,6 +89,19 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
                 })
             );
         }
+        if (source.getOverrides() != null) {
+            target.getOverrides().stream()
+                .filter(descriptor -> descriptor.getVersion().startsWith("$"))
+                .findFirst()
+                .ifPresent(refOverride -> {
+                    target.getDependencies().stream()
+                        .filter(dep -> dep.getName().equals(refOverride.getVersion().substring(1)))
+                        .findFirst()
+                        .ifPresent(dep -> {
+                            refOverride.setVersion(dep.getVersionRange());
+                        });
+                });
+        }
     }
 
     @Named("scriptsMapping")
@@ -103,6 +117,11 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Named("engineMapping")
     default List<EngineDescriptor> engineMapping(Map<String, String> sourceField, @Context Scanner scanner) {
         return mapMapProperty(sourceField, EngineDescriptor.class, EngineDescriptor::setVersionRange, scanner);
+    }
+
+    @Named("overridesMapping")
+    default List<OverridesDescriptor> overridesMapping(Map<String, String> sourceField, @Context Scanner scanner) {
+        return mapMapProperty(sourceField, OverridesDescriptor.class, OverridesDescriptor::setVersion, scanner);
     }
 
     @Named("osMapping")
