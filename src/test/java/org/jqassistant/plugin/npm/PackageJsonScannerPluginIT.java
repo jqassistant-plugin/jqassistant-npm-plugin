@@ -128,6 +128,14 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(osByName.get("win32")).isNotNull();
         assertThat(osByName.get("win32").getType()).isEqualTo("supported");
 
+        Map<String, CpuDescriptor> cpuByName = packageJson.getCpu()
+            .stream()
+            .collect(toMap(NamedDescriptor::getName, Function.identity()));
+        assertThat(cpuByName.get("x64")).isNotNull();
+        assertThat(cpuByName.get("x64").getType()).isEqualTo("supported");
+        assertThat(cpuByName.get("arm")).isNotNull();
+        assertThat(cpuByName.get("arm").getType()).isEqualTo("blocked");
+
         Map<String, String> overridesByName = packageJson.getOverrides()
             .stream()
             .collect(toMap(NamedDescriptor::getName, OverridesDescriptor::getVersion));

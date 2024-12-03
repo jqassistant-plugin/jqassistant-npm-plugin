@@ -66,4 +66,6 @@ public class Package {
 
     private String[] os;
 
+    private String[] cpu;
+
 }

@@ -18,7 +18,7 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.mapstruct.factory.Mappers.getMapper;
 
-@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class, BinaryMapper.class, OsMapper.class},
+@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class, BinaryMapper.class},
     unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface PackageMapper extends DescriptorMapper<Package, PackageDescriptor> {
 
@@ -33,6 +33,7 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Mapping(source = "peerDependencies", target = "peerDependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "overrides", target = "overrides", qualifiedByName = "overridesMapping")
     @Mapping(source = "os", target = "os", qualifiedByName = "osMapping")
+    @Mapping(source = "cpu", target = "cpu", qualifiedByName = "cpuMapping")
     @Mapping(target = "bundledDependencies", ignore = true)
     @Mapping(source = "engines", target = "engines", qualifiedByName = "engineMapping")
     PackageDescriptor toDescriptor(Package value, @Context Scanner scanner);
@@ -136,6 +137,26 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
                     } else {
                         descriptor.setType("supported");
                         descriptor.setName(os);
+                    }
+                    return descriptor;
+                })
+                .collect(toList());
+        }
+        return emptyList();
+    }
+
+    @Named("cpuMapping")
+    default List<CpuDescriptor> cpuMapping(String[] sourceField, @Context Scanner scanner) {
+        if (sourceField != null) {
+            return Arrays.stream(sourceField)
+                .map(cpu -> {
+                    CpuDescriptor descriptor = scanner.getContext().getStore().create(CpuDescriptor.class);
+                    if (cpu.startsWith("!")) {
+                        descriptor.setType("blocked");
+                        descriptor.setName(cpu.substring(1));
+                    } else {
+                        descriptor.setType("supported");
+                        descriptor.setName(cpu);
                     }
                     return descriptor;
                 })

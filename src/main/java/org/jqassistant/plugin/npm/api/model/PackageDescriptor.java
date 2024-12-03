@@ -86,4 +86,7 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
 
     @Relation("DECLARES_OS")
     List<OsDescriptor> getOs();
+
+    @Relation("DECLARES_CPU")
+    List<CpuDescriptor> getCpu();
 }

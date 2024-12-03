@@ -59,6 +59,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "overrides": result.setOverrides(deserializeOverridesProperty(valueNode)); break;
                     case "engines": result.setEngines(deserializeStringMap("engines", valueNode)); break;
                     case "os": result.setOs(deserializeStringArrayProperty("os", valueNode)); break;
+                    case "cpu": result.setCpu(deserializeStringArrayProperty("cpu", valueNode)); break;
                     default: log.error("Encountered unknown top-level property in package.json ({})", packageJsonProperty.getKey());
                 }
             });
