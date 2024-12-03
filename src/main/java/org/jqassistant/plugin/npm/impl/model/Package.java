@@ -60,8 +60,12 @@ public class Package {
 
     private Map<String, String> optionalDependencies;
 
+    private Map<String, String> overrides;
+
     private Map<String, String> engines;
 
     private String[] os;
+
+    private String[] cpu;
 
 }
