@@ -18,7 +18,7 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.mapstruct.factory.Mappers.getMapper;
 
-@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class, BinaryMapper.class},
+@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class, BinaryMapper.class, RepositoryMapper.class},
     unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface PackageMapper extends DescriptorMapper<Package, PackageDescriptor> {
 
@@ -27,6 +27,7 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Override
     @Mapping(source = "bugs", target = "bugTracker")
     @Mapping(source = "bin", target = "binaries")
+    @Mapping(source = "repository", target = "repository")
     @Mapping(source = "scripts", target = "scripts", qualifiedByName = "scriptsMapping")
     @Mapping(source = "dependencies", target = "dependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "devDependencies", target = "devDependencies", qualifiedByName = "dependencyMapping")
@@ -57,16 +58,16 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
         }
 
         // resolve bundledDependencies
-        if(source.getBundleDependencies() != null) {
-            if(Boolean.TRUE.equals(source.getBundleDependencies().getAllBundled())) {
+        if (source.getBundleDependencies() != null) {
+            if (Boolean.TRUE.equals(source.getBundleDependencies().getAllBundled())) {
                 target.getBundledDependencies().addAll(target.getDependencies());
             } else {
                 source.getBundleDependencies().getDependencies().forEach(depName ->
                     target.getDependencies()
-                    .stream()
-                    .filter(dep -> dep.getName().equals(depName))
-                    .findFirst()
-                    .ifPresent(target.getBundledDependencies()::add)
+                        .stream()
+                        .filter(dep -> dep.getName().equals(depName))
+                        .findFirst()
+                        .ifPresent(target.getBundledDependencies()::add)
                 );
             }
         }
@@ -74,21 +75,21 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
         if (source.getOptionalDependencies() != null) {
             source.getOptionalDependencies().forEach((key, value) ->
                 target.getDependencies().stream()
-                .filter(dep -> dep.getName().equals(key))
-                .findFirst()
-                .ifPresentOrElse(depToUpdate -> {
-                    // mark existing dependency as optional and override version range
-                    depToUpdate.setOptional(true);
-                    depToUpdate.setVersionRange(value);
-                }, () -> {
-                    // add new optional dependency
-                    Store store = scanner.getContext().getStore();
-                    DependencyDescriptor descriptor = store.create(DependencyDescriptor.class);
-                    descriptor.setName(key);
-                    descriptor.setVersionRange(value);
-                    descriptor.setOptional(true);
-                    target.getDependencies().add(descriptor);
-                })
+                    .filter(dep -> dep.getName().equals(key))
+                    .findFirst()
+                    .ifPresentOrElse(depToUpdate -> {
+                        // mark existing dependency as optional and override version range
+                        depToUpdate.setOptional(true);
+                        depToUpdate.setVersionRange(value);
+                    }, () -> {
+                        // add new optional dependency
+                        Store store = scanner.getContext().getStore();
+                        DependencyDescriptor descriptor = store.create(DependencyDescriptor.class);
+                        descriptor.setName(key);
+                        descriptor.setVersionRange(value);
+                        descriptor.setOptional(true);
+                        target.getDependencies().add(descriptor);
+                    })
             );
         }
         if (source.getOverrides() != null) {
@@ -107,10 +108,8 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
             target.getExports().stream()
                 .filter(descriptor -> descriptor.getName().startsWith(".")).forEach(descriptor1 -> {
                         descriptor1.setName(descriptor1.getName().replaceFirst(".", target.getName()));
-                    System.out.println(target.getExports());
                     }
                 );
-            System.out.println(target.getExports());
         }
     }
 
@@ -156,7 +155,7 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
 
     @Named("exportMapping")
     default List<ExportDescriptor> exportMapping(Map<String, String> sourceField, @Context Scanner scanner) {
-        return  mapMapProperty(sourceField, ExportDescriptor.class, ExportDescriptor::setPath, scanner);
+        return mapMapProperty(sourceField, ExportDescriptor.class, ExportDescriptor::setPath, scanner);
     }
 
     @Named("cpuMapping")

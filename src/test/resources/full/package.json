@@ -51,6 +51,15 @@
     "bin1": "script1.js",
     "bin2": "script2.js"
   },
+  "man": [
+    "./man/foo.1",
+    "./man/bar.1"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm/cli.git",
+    "directory": "workspaces/libnpmpublish"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"

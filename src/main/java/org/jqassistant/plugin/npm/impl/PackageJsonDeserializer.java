@@ -49,6 +49,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "main": result.setMain(deserializeStringProperty("main", valueNode)); break;
                     case "browser": result.setBrowser(deserializeStringProperty("browser", valueNode)); break;
                     case "bin": result.setBin(deserializeBinProperty(valueNode)); break;
+                    case "repository": result.setRepository(deserializeRepositoryProperty(valueNode)); break;
                     case "scripts": result.setScripts(deserializeStringMap("scripts", valueNode)); break;
                     case "dependencies": result.setDependencies(deserializeStringMap("dependencies", valueNode)); break;
                     case "devDependencies": result.setDevDependencies(deserializeStringMap("devDependencies", valueNode)); break;
@@ -293,6 +294,22 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
             log.error("property bin is neither an object nor a string");
         }
         return result;
+    }
+
+    private Repository deserializeRepositoryProperty(JsonNode node) {
+        Repository r = new Repository();
+        if (node.isObject()) {
+            r.setUrl(node.get("url").textValue());
+            r.setType(node.get("type").textValue());
+            r.setDirectory(node.get("directory").textValue());
+            return r;
+        } else if (node.isTextual()) {
+            r.setUrl(node.textValue());
+            return r;
+        } else {
+            log.error("property bin is neither an object nor a string");
+        }
+        return null;
     }
 
     private Map<String, Boolean> deserializePeerDependenciesMetaProperty(JsonNode node) {

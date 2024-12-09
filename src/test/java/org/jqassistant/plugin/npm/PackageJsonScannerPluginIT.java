@@ -86,6 +86,10 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
             .containsEntry("bin1", "script1.js")
             .containsEntry("bin2", "script2.js");
 
+        RepositoryDescriptor repo = packageJson.getRepository();
+        assertThat(repo.getType()).isEqualTo("git");
+        assertThat(repo.getUrl()).isEqualTo("git+https://github.com/npm/cli.git");
+        assertThat(repo.getDirectory()).isEqualTo("workspaces/libnpmpublish");
 
         Map<String, String> scriptsByName = packageJson.getScripts()
             .stream()
@@ -220,6 +224,39 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         BinaryDescriptor bin = packageJson.getBinaries().get(0);
         assertThat(bin.getName()).isEqualTo("jqa-npm-test");
         assertThat(bin.getPath()).isEqualTo("bin/script.js");
+
+        store.commitTransaction();
+    }
+
+    @Test
+    void exportsAsString() {
+        File file = new File(getClassesDirectory(PackageJsonScannerPluginIT.class), "exports-string/package.json");
+
+        PackageDescriptor packageJson = getScanner().scan(file, "/exports-string/package.json", DefaultScope.NONE);
+
+        store.beginTransaction();
+        assertThat(packageJson).isNotNull();
+
+        assertThat(packageJson.getExports()).hasSize(1);
+        ExportDescriptor export = packageJson.getExports().get(0);
+        assertThat(export.getName()).isEqualTo("jqa-npm-test");
+        assertThat(export.getPath()).isEqualTo("./index.js");
+
+        store.commitTransaction();
+    }
+
+    @Test
+    void repositoryAsString() {
+        File file = new File(getClassesDirectory(PackageJsonScannerPluginIT.class), "repository-string/package.json");
+
+        PackageDescriptor packageJson = getScanner().scan(file, "/repository-string/package.json", DefaultScope.NONE);
+
+        store.beginTransaction();
+        assertThat(packageJson).isNotNull();
+
+        assertThat(packageJson.getRepository()).isNotNull();
+        RepositoryDescriptor repo = packageJson.getRepository();
+        assertThat(repo.getUrl()).isEqualTo("bitbucket:user/repo");
 
         store.commitTransaction();
     }

@@ -48,6 +48,10 @@ public class Package {
 
     private List<Binary> bin;
 
+    private String[] man;
+
+    private Repository repository;
+
     private Map<String, String> scripts;
 
     private Map<String, String> dependencies;

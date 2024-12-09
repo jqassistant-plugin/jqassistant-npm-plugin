@@ -50,6 +50,11 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
     @Relation("HAS_BINARY")
     List<BinaryDescriptor> getBinaries();
 
+    @Relation("IN_REPOSITORY")
+    RepositoryDescriptor getRepository();
+
+    void setRepository(RepositoryDescriptor repository);
+
     @Relation("HAS_BUG_TRACKER")
     BugTrackerDescriptor getBugTracker();
 
