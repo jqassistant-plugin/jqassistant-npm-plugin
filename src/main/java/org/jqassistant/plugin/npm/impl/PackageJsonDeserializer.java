@@ -45,7 +45,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "contributors": result.setContributors(deserializeContributorsProperty(valueNode)); break;
                     case "funding": result.setFunding(deserializeFundingProperty(valueNode)); break;
                     case "files": result.setFiles(deserializeStringArrayProperty("files", valueNode)); break;
-                    case "exports": result.setExports(deserializeStringPropertyOrMap("exports", valueNode)); break;
+                    case "exports": result.setExports(deserializeStringPropertyOrMap(valueNode)); break;
                     case "main": result.setMain(deserializeStringProperty("main", valueNode)); break;
                     case "browser": result.setBrowser(deserializeStringProperty("browser", valueNode)); break;
                     case "bin": result.setBin(deserializeBinProperty(valueNode)); break;
@@ -115,7 +115,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
         return result;
     }
 
-    private Map<String, String> deserializeStringPropertyOrMap(String propertyName, JsonNode node) {
+    private Map<String, String> deserializeStringPropertyOrMap(JsonNode node) {
         Map<String, String> result = new HashMap<>();
         if (node.isTextual()) {
             result.put(".", node.textValue());
@@ -126,11 +126,11 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                 if (value.isTextual()) {
                     result.put(field.getKey(), value.textValue());
                 } else {
-                    log.error("Property {} of {} is not a string", field.getKey(), propertyName);
+                    log.error("Property {} of {} is not a string", field.getKey(), "exports");
                 }
             });
         } else {
-            log.error("property {} is neither represented through a string nor an object", propertyName);
+            log.error("property {} is neither represented through a string nor an object", "exports");
         }
         return result;
     }

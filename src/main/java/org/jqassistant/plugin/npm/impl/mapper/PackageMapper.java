@@ -94,21 +94,15 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
         }
         if (source.getOverrides() != null) {
             target.getOverrides().stream()
-                .filter(descriptor -> descriptor.getVersion().startsWith("$")).forEach(refOverride -> {
-                    target.getDependencies().stream()
-                        .filter(dep -> dep.getName().equals(refOverride.getVersion().substring(1)))
-                        .findFirst()
-                        .ifPresent(dep -> {
-                            refOverride.setVersion(dep.getVersionRange());
-                        });
-                });
+                .filter(descriptor -> descriptor.getVersion().startsWith("$")).forEach(refOverride -> target.getDependencies().stream()
+                    .filter(dep -> dep.getName().equals(refOverride.getVersion().substring(1)))
+                    .findFirst()
+                    .ifPresent(dep -> refOverride.setVersion(dep.getVersionRange())));
         }
 
         if (source.getExports() != null && target.getName() != null) {
             target.getExports().stream()
-                .filter(descriptor -> descriptor.getName().startsWith(".")).forEach(descriptor1 -> {
-                        descriptor1.setName(descriptor1.getName().replaceFirst(".", target.getName()));
-                    }
+                .filter(descriptor -> descriptor.getName().startsWith(".")).forEach(descriptor1 -> descriptor1.setName(descriptor1.getName().replaceFirst(".", target.getName()))
                 );
         }
     }
