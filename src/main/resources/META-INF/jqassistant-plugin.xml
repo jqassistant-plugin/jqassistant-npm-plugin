@@ -10,10 +10,14 @@
         <class>org.jqassistant.plugin.npm.api.model.PersonDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.FundingDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.BinaryDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.RepositoryDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.ScriptDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.DependencyDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.EngineDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.OsDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.CpuDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.ExportDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.OverridesDescriptor</class>
     </model>
     <scanner>
         <class>org.jqassistant.plugin.npm.impl.PackageJsonScannerPlugin</class>
