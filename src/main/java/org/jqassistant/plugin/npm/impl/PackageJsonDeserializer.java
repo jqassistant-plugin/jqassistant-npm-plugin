@@ -45,6 +45,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "contributors": result.setContributors(deserializeContributorsProperty(valueNode)); break;
                     case "funding": result.setFunding(deserializeFundingProperty(valueNode)); break;
                     case "files": result.setFiles(deserializeStringArrayProperty("files", valueNode)); break;
+                    case "exports": result.setExports(deserializeStringPropertyOrMap("exports", valueNode)); break;
                     case "main": result.setMain(deserializeStringProperty("main", valueNode)); break;
                     case "browser": result.setBrowser(deserializeStringProperty("browser", valueNode)); break;
                     case "bin": result.setBin(deserializeBinProperty(valueNode)); break;
@@ -112,6 +113,28 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
         }
         return result;
     }
+
+    private Map<String, String> deserializeStringPropertyOrMap(String propertyName, JsonNode node) {
+        Map<String, String> result = new HashMap<>();
+        if (node.isTextual()) {
+            result.put(".", node.textValue());
+        }
+        else if (node.isObject()) {
+            node.fields().forEachRemaining(field -> {
+                JsonNode value = field.getValue();
+                if (value.isTextual()) {
+                    result.put(field.getKey(), value.textValue());
+                } else {
+                    log.error("Property {} of {} is not a string", field.getKey(), propertyName);
+                }
+            });
+        } else {
+            log.error("property {} is neither represented through a string nor an object", propertyName);
+        }
+        return result;
+    }
+
+
 
     private Person deserializePersonProperty(String propertyName, JsonNode node) {
         if (node.isTextual()) {

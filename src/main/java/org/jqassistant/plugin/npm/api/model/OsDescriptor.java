@@ -9,10 +9,6 @@ import com.buschmais.xo.neo4j.api.annotation.Label;
 @Label("Os")
 public interface OsDescriptor extends NPMDescriptor, NamedDescriptor {
 
-    String getName();
-
-    void setName(String name);
-
     String getType();
 
     void setType(String type);

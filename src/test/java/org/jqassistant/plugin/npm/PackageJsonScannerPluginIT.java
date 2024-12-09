@@ -66,6 +66,15 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(fundingByType.get("url").getUrl()).isEqualTo("funding-y.com");
 
         assertThat(packageJson.getFiles()).isEqualTo(new String[] { "dist/" });
+
+        Map<String, ExportDescriptor> exportsByName = packageJson.getExports()
+            .stream()
+            .collect(toMap(NamedDescriptor::getName, Function.identity()));
+        assertThat(exportsByName.get("jqa-npm-test").getPath()).isEqualTo("./lib/index.js");
+        assertThat(exportsByName.get("jqa-npm-test/lib").getPath()).isEqualTo("./lib/index.js");
+        assertThat(exportsByName.get("jqa-npm-test/lib/*").getPath()).isEqualTo("./lib/*.js");
+        assertThat(exportsByName.get("jqa-npm-test/lib/*.js").getPath()).isEqualTo("./lib/*.js");
+
         assertThat(packageJson.getMain()).isEqualTo("test.js");
         assertThat(packageJson.getBrowser()).isEqualTo("test2.js");
 
@@ -139,10 +148,10 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         Map<String, String> overridesByName = packageJson.getOverrides()
             .stream()
             .collect(toMap(NamedDescriptor::getName, OverridesDescriptor::getVersion));
-        assertThat(overridesByName).hasSize(7);
+        assertThat(overridesByName).hasSize(8);
         assertThat(overridesByName).containsEntry("moo", "1.0.0").containsEntry("boo", "2.0.0")
             .containsEntry("boo/bar", "4.0.0").containsEntry("dar/doo", "6.0.0").containsEntry("baz/boz/biz", "7.0.0")
-            .containsEntry("lar@2.0.0/loo", "8.0.0").containsEntry("soo", "3.0.0 - 2.9999.9999");
+            .containsEntry("lar@2.0.0/loo", "8.0.0").containsEntry("soo", "3.0.0 - 2.9999.9999").containsEntry("joo", "3.0.0 - 2.9999.9999");
 
         Map<String, String> enginesByName = packageJson.getEngines()
             .stream()

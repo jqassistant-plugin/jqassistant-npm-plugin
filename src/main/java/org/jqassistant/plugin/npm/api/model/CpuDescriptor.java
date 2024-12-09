@@ -9,10 +9,6 @@ import com.buschmais.xo.neo4j.api.annotation.Label;
 @Label("Cpu")
 public interface CpuDescriptor extends NPMDescriptor, NamedDescriptor {
 
-    String getName();
-
-    void setName(String name);
-
     String getType();
 
     void setType(String type);

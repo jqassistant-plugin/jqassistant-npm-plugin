@@ -40,6 +40,8 @@ public class Package {
 
     private String[] files;
 
+    private Map<String, String> exports;
+
     private String main;
 
     private String browser;

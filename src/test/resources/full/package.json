@@ -39,6 +39,12 @@
   "files": [
     "dist/"
   ],
+  "exports": {
+    ".": "./lib/index.js",
+    "./lib": "./lib/index.js",
+    "./lib/*": "./lib/*.js",
+    "./lib/*.js": "./lib/*.js"
+  },
   "main": "test.js",
   "browser": "test2.js",
   "bin": {
@@ -91,7 +97,8 @@
     "lar@2.0.0": {
       "loo": "8.0.0"
     },
-    "soo": "$foo"
+    "soo": "$foo",
+    "joo": "$foo"
   },
   "engines": {
     "node": ">=14",

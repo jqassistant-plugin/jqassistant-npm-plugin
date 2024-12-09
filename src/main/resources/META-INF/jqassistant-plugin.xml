@@ -15,6 +15,7 @@
         <class>org.jqassistant.plugin.npm.api.model.EngineDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.OsDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.CpuDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.ExportDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.OverridesDescriptor</class>
     </model>
     <scanner>

@@ -36,6 +36,9 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
 
     void setFiles(String[] files);
 
+    @Relation("HAS_EXPORT")
+    List<ExportDescriptor> getExports();
+
     String getMain();
 
     void setMain(String main);

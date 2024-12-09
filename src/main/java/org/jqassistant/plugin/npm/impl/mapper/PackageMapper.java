@@ -34,6 +34,7 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Mapping(source = "overrides", target = "overrides", qualifiedByName = "overridesMapping")
     @Mapping(source = "os", target = "os", qualifiedByName = "osMapping")
     @Mapping(source = "cpu", target = "cpu", qualifiedByName = "cpuMapping")
+    @Mapping(source = "exports", target = "exports", qualifiedByName = "exportMapping")
     @Mapping(target = "bundledDependencies", ignore = true)
     @Mapping(source = "engines", target = "engines", qualifiedByName = "engineMapping")
     PackageDescriptor toDescriptor(Package value, @Context Scanner scanner);
@@ -92,9 +93,7 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
         }
         if (source.getOverrides() != null) {
             target.getOverrides().stream()
-                .filter(descriptor -> descriptor.getVersion().startsWith("$"))
-                .findFirst()
-                .ifPresent(refOverride -> {
+                .filter(descriptor -> descriptor.getVersion().startsWith("$")).forEach(refOverride -> {
                     target.getDependencies().stream()
                         .filter(dep -> dep.getName().equals(refOverride.getVersion().substring(1)))
                         .findFirst()
@@ -102,6 +101,16 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
                             refOverride.setVersion(dep.getVersionRange());
                         });
                 });
+        }
+
+        if (source.getExports() != null && target.getName() != null) {
+            target.getExports().stream()
+                .filter(descriptor -> descriptor.getName().startsWith(".")).forEach(descriptor1 -> {
+                        descriptor1.setName(descriptor1.getName().replaceFirst(".", target.getName()));
+                    System.out.println(target.getExports());
+                    }
+                );
+            System.out.println(target.getExports());
         }
     }
 
@@ -143,6 +152,11 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
                 .collect(toList());
         }
         return emptyList();
+    }
+
+    @Named("exportMapping")
+    default List<ExportDescriptor> exportMapping(Map<String, String> sourceField, @Context Scanner scanner) {
+        return  mapMapProperty(sourceField, ExportDescriptor.class, ExportDescriptor::setPath, scanner);
     }
 
     @Named("cpuMapping")
