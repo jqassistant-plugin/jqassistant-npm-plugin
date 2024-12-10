@@ -127,5 +127,6 @@
       "react-app",
       "react-app/jest"
     ]
-  }
+  },
+  "private": true
 }

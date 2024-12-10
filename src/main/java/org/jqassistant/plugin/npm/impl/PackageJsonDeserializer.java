@@ -9,10 +9,7 @@ import org.jqassistant.plugin.npm.impl.model.Package;
 import org.jqassistant.plugin.npm.impl.model.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,6 +59,8 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "engines": result.setEngines(deserializeStringMap("engines", valueNode)); break;
                     case "os": result.setOs(deserializeStringArrayProperty("os", valueNode)); break;
                     case "cpu": result.setCpu(deserializeStringArrayProperty("cpu", valueNode)); break;
+                    case "devEngines": result.setDevEngines(deserializeDevEnginesProperty(valueNode)); break;
+                    case "private": result.setPrivat(deserializeBooleanProperty("private", valueNode)); break;
                     default: log.error("Encountered unknown top-level property in package.json ({})", packageJsonProperty.getKey());
                 }
             });
@@ -115,7 +114,17 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
         return result;
     }
 
-    private Map<String, String> deserializeStringPropertyOrMap(JsonNode node) {
+    private String deserializeBooleanProperty(String propertyName, JsonNode node) {
+        if (node.isBoolean()) {
+            return node.asText();
+        } else {
+            log.error("property {} is not boolean", propertyName);
+            return null;
+        }
+    }
+
+
+        private Map<String, String> deserializeStringPropertyOrMap(JsonNode node) {
         Map<String, String> result = new HashMap<>();
         if (node.isTextual()) {
             result.put(".", node.textValue());
@@ -403,4 +412,60 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
         return result;
     }
 
+    private List<DevEngine> deserializeDevEnginesProperty(JsonNode node) {
+        List<DevEngine> result = new ArrayList<>();
+        if (node.isObject()) {
+            node.fields().forEachRemaining(field -> {
+                    DevEngine devEngine = new DevEngine();
+                    devEngine.setType(field.getKey());
+                    if (field.getValue().isObject()) {
+                        result.add(deserializeDevEnginesObjectField(field.getValue(), devEngine));
+                    }
+                    if (field.getValue().isArray()) {
+                        Iterator<JsonNode> elementsIterator = field.getValue().elements();
+                        while (elementsIterator.hasNext()) {
+                            JsonNode arrayField = elementsIterator.next();
+                            if (arrayField.isObject()) {
+                                System.out.println(arrayField);
+                                result.add(deserializeDevEnginesObjectField(arrayField, devEngine));
+                            } else {
+                                log.error("Field {} of property devEngines is not an object", field.getKey());
+                            }
+                        }
+                    }
+                });
+        } else {
+            log.error("property devEngines is not an object");
+        }
+        result.stream()
+            .filter(descriptor -> descriptor.getOnFail() == null)
+            .forEach(descriptor -> descriptor.setOnFail("error")); // if undefined, onFail is of the same value as error
+        result.stream()
+            .filter(descriptor -> descriptor.getName() == null) // objects must contain name
+            .forEach(descriptor -> log.error("field {} of property devEngines contains no name", descriptor.getType()));
+        return result;
+    }
+
+    private DevEngine deserializeDevEnginesObjectField(JsonNode field, DevEngine devEngine) {
+        field.fields()
+            .forEachRemaining(objectField -> {
+                switch (objectField.getKey()) {
+                case "name":
+                    devEngine.setName(objectField.getValue().asText());
+                    break;
+                case "version":
+                    devEngine.setVersion(objectField.getValue().asText());
+                    break;
+                case "onFail":
+                    if(objectField.getValue().asText().equals("warn") || objectField.getValue().asText().equals("error") || objectField.getValue().asText().equals("ignore")) {
+                        devEngine.setOnFail(objectField.getValue()
+                            .asText());
+                    }else{
+                        log.error("onFail field of {} property devEngines is not one of [warn, error, ignore]", devEngine.getType());
+                    }
+                    break;
+                }
+            });
+        return devEngine;
+    }
 }

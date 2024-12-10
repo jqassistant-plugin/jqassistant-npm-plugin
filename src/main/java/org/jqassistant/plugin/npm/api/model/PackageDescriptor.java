@@ -97,4 +97,11 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
 
     @Relation("DECLARES_CPU")
     List<CpuDescriptor> getCpu();
+
+    @Relation("DECLARES_DEV_ENGINE")
+    List<DevEngineDescriptor> getDevEngines();
+
+    String getPrivate();
+
+    void setPrivate(String privat);
 }

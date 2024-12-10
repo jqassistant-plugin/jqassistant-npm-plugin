@@ -46,6 +46,7 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(packageJson.getBugTracker().getUrl()).isEqualTo("https://bug.tracker.example.com");
         assertThat(packageJson.getBugTracker().getEmail()).isEqualTo("bugs@example.com");
         assertThat(packageJson.getLicense()).isEqualTo("GPLv3");
+        assertThat(packageJson.getPrivate()).isEqualTo("true");
 
         verifyPerson(packageJson.getAuthor(), "Test User 1", "test1@example.com", "https://example.com/users/test1");
 
@@ -163,6 +164,8 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(enginesByName).containsEntry("node", ">=14")
             .containsEntry("npm", ">=6");
 
+
+
         store.commitTransaction();
     }
 
@@ -258,6 +261,39 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         RepositoryDescriptor repo = packageJson.getRepository();
         assertThat(repo.getUrl()).isEqualTo("bitbucket:user/repo");
 
+        store.commitTransaction();
+    }
+
+    private static void verifyDevEngine (DevEngineDescriptor devEngineDescriptor, String expectedType, String expectedVersion, String expectedOnFail) {
+        assertThat(devEngineDescriptor).isNotNull();
+        assertThat(devEngineDescriptor.getType()).isEqualTo(expectedType);
+        assertThat(devEngineDescriptor.getVersion()).isEqualTo(expectedVersion);
+        assertThat(devEngineDescriptor.getOnFail()).isEqualTo(expectedOnFail);
+    }
+
+    @Test
+    void devEngines() {
+        File file = new File(getClassesDirectory(PackageJsonScannerPluginIT.class), "dev-engines/package.json");
+
+        PackageDescriptor packageJson = getScanner().scan(file, "/dev-engines/package.json", DefaultScope.NONE);
+
+        store.beginTransaction();
+        assertThat(packageJson).isNotNull();
+
+        List<DevEngineDescriptor> devEngines = packageJson.getDevEngines();
+        assertThat(devEngines).isNotEmpty();
+
+        Map<String, DevEngineDescriptor> devEnginesByName = devEngines.stream()
+            .collect(toMap(NamedDescriptor::getName, devEngine -> devEngine));
+        verifyDevEngine(devEnginesByName.get("x64"),  "cpu", null, "error");
+        verifyDevEngine(devEnginesByName.get("linux"), "os", null, "error");
+        verifyDevEngine(devEnginesByName.get("win32"), "os", null, "ignore");
+
+        verifyDevEngine(devEnginesByName.get("glibc"), "libc", ">=2.28", "error");
+        verifyDevEngine(devEnginesByName.get("musl"), "libc", null, "warn");
+
+        verifyDevEngine(devEnginesByName.get("node"), "runtime", ">=18.0.0", "error");
+        verifyDevEngine(devEnginesByName.get("npm"), "packageManager", ">=8.0.0", "warn");
         store.commitTransaction();
     }
 }

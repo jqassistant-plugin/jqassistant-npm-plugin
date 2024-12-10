@@ -74,4 +74,8 @@ public class Package {
 
     private String[] cpu;
 
+    private List<DevEngine> devEngines;
+
+    private String privat;
+
 }

@@ -18,7 +18,7 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.mapstruct.factory.Mappers.getMapper;
 
-@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class, BinaryMapper.class, RepositoryMapper.class},
+@Mapper(uses = {PersonMapper.class, BugTrackerMapper.class, FundingMapper.class, BinaryMapper.class, RepositoryMapper.class, DevEngineMapper.class},
     unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface PackageMapper extends DescriptorMapper<Package, PackageDescriptor> {
 
@@ -38,6 +38,8 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Mapping(source = "exports", target = "exports", qualifiedByName = "exportMapping")
     @Mapping(target = "bundledDependencies", ignore = true)
     @Mapping(source = "engines", target = "engines", qualifiedByName = "engineMapping")
+    @Mapping(source = "devEngines", target = "devEngines")
+    @Mapping(source = "privat", target = "private")
     PackageDescriptor toDescriptor(Package value, @Context Scanner scanner);
 
     @AfterMapping
@@ -102,7 +104,10 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
 
         if (source.getExports() != null && target.getName() != null) {
             target.getExports().stream()
-                .filter(descriptor -> descriptor.getName().startsWith(".")).forEach(descriptor1 -> descriptor1.setName(descriptor1.getName().replaceFirst(".", target.getName()))
+                .filter(descriptor -> descriptor.getName().startsWith(".")).forEach(descriptor1 -> {
+                    String newName = target.getName() + descriptor1.getName().substring(1);
+                    descriptor1.setName(newName);
+                    }
                 );
         }
     }
