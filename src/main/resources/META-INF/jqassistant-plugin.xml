@@ -12,6 +12,7 @@
         <class>org.jqassistant.plugin.npm.api.model.BinaryDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.RepositoryDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.ScriptDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.ConfigDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.DependencyDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.EngineDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.OsDescriptor</class>

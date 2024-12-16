@@ -98,6 +98,11 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(scriptsByName).containsEntry("start", "react-scripts start")
             .containsEntry("build", "react-scripts build");
 
+        Map<String, String> configByName = packageJson.getConfig()
+            .stream()
+            .collect(toMap(NamedDescriptor::getName, ConfigDescriptor::getValue));
+        assertThat(configByName).containsEntry("port", "8080");
+
         Map<String, DependencyDescriptor> dependenciesByName = packageJson.getDependencies()
             .stream()
             .collect(toMap(NamedDescriptor::getName, Function.identity()));

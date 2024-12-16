@@ -48,6 +48,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "bin": result.setBin(deserializeBinProperty(valueNode)); break;
                     case "repository": result.setRepository(deserializeRepositoryProperty(valueNode)); break;
                     case "scripts": result.setScripts(deserializeStringMap("scripts", valueNode)); break;
+                    case "config": result.setConfig(deserializeStringMap("config", valueNode)); break;
                     case "dependencies": result.setDependencies(deserializeStringMap("dependencies", valueNode)); break;
                     case "devDependencies": result.setDevDependencies(deserializeStringMap("devDependencies", valueNode)); break;
                     case "peerDependencies": result.setPeerDependencies(deserializeStringMap("peerDependencies", valueNode)); break;

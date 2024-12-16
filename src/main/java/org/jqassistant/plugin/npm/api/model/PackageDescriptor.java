@@ -74,6 +74,9 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
     @Relation("DECLARES_SCRIPT")
     List<ScriptDescriptor> getScripts();
 
+    @Relation("DECLARES_CONFIG")
+    List<ConfigDescriptor> getConfig();
+
     @Relation("DECLARES_DEPENDENCY")
     List<DependencyDescriptor> getDependencies();
 

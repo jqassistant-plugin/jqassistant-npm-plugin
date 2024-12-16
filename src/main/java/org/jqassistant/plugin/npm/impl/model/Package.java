@@ -54,6 +54,8 @@ public class Package {
 
     private Map<String, String> scripts;
 
+    private Map<String, String> config;
+
     private Map<String, String> dependencies;
 
     private Map<String, String> devDependencies;

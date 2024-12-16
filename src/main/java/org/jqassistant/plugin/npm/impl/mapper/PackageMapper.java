@@ -29,6 +29,7 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Mapping(source = "bin", target = "binaries")
     @Mapping(source = "repository", target = "repository")
     @Mapping(source = "scripts", target = "scripts", qualifiedByName = "scriptsMapping")
+    @Mapping(source = "config", target = "config", qualifiedByName = "configMapping")
     @Mapping(source = "dependencies", target = "dependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "devDependencies", target = "devDependencies", qualifiedByName = "dependencyMapping")
     @Mapping(source = "peerDependencies", target = "peerDependencies", qualifiedByName = "dependencyMapping")
@@ -115,6 +116,11 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Named("scriptsMapping")
     default List<ScriptDescriptor> scriptsMapping(Map<String, String> sourceField, @Context Scanner scanner) {
         return mapMapProperty(sourceField, ScriptDescriptor.class, ScriptDescriptor::setScript, scanner);
+    }
+
+    @Named("configMapping")
+    default List<ConfigDescriptor> configMapping(Map<String, String> sourceField, @Context Scanner scanner) {
+        return mapMapProperty(sourceField, ConfigDescriptor.class, ConfigDescriptor::setValue, scanner);
     }
 
     @Named("dependencyMapping")
