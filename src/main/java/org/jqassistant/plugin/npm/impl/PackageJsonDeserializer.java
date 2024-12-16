@@ -416,9 +416,9 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
         List<DevEngine> result = new ArrayList<>();
         if (node.isObject()) {
             node.fields().forEachRemaining(field -> {
-                    DevEngine devEngine = new DevEngine();
-                    devEngine.setType(field.getKey());
                     if (field.getValue().isObject()) {
+                        DevEngine devEngine = new DevEngine();
+                        devEngine.setType(field.getKey());
                         result.add(deserializeDevEnginesObjectField(field.getValue(), devEngine));
                     }
                     if (field.getValue().isArray()) {
@@ -426,8 +426,9 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                         while (elementsIterator.hasNext()) {
                             JsonNode arrayField = elementsIterator.next();
                             if (arrayField.isObject()) {
-                                System.out.println(arrayField);
-                                result.add(deserializeDevEnginesObjectField(arrayField, devEngine));
+                                DevEngine devEngineForArrayField = new DevEngine();
+                                devEngineForArrayField.setType(field.getKey());
+                                result.add(deserializeDevEnginesObjectField(arrayField, devEngineForArrayField));
                             } else {
                                 log.error("Field {} of property devEngines is not an object", field.getKey());
                             }
