@@ -36,5 +36,16 @@ jobs:
       ossrh_signing_key: ${{ secrets.OSSRH_SIGNING_KEY }}
       ossrh_signing_password: ${{ secrets.OSSRH_SIGNING_PASSWORD }}
       sonar_token: ${{ secrets.SONAR_TOKEN }}
-
-
+  publish-release-docs:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    steps:
+      - name: Publish Versioned Quartz GitHub Pages
+        uses: RelativeProgramming/versioned-quartz-gh-pages-deploy@v1.0.0
+        with:
+          quartz-repo: 'jqassistant-tooling/jqassistant-quartz-docs'
+          deployment-version: ${{ github.event.inputs.releaseVersion }}

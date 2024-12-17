@@ -7,10 +7,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Os {
+public class DevEngine {
 
     private String name;
 
     private String type;
+
+    private String version;
+
+    private String onFail;
 
 }

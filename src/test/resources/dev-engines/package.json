@@ -1,0 +1,39 @@
+{
+  "name": "jqa-npm-test",
+  "devEngines": {
+    "cpu": {
+      "name": "x64"
+    },
+    "os": [
+      {
+        "name": "linux",
+        "onFail": "error"
+      },
+      {
+        "name": "win32",
+        "onFail": "ignore"
+      }
+    ],
+    "libc": [
+      {
+        "name": "glibc",
+        "version": ">=2.28",
+        "onFail": "error"
+      },
+      {
+        "name": "musl",
+        "onFail": "warn"
+      }
+    ],
+    "runtime": {
+      "name": "node",
+      "version": ">=18.0.0",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": ">=8.0.0",
+      "onFail": "warn"
+    }
+  }
+}
