@@ -1,0 +1,31 @@
+---
+name: Publish Doc-Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/**'
+      - 'docs/**'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  publish_docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Publish Versioned Quartz GitHub Pages
+        uses: RelativeProgramming/versioned-quartz-gh-pages-deploy@v1.0.0
+        with:
+          quartz-repo: 'jqassistant-tooling/jqassistant-quartz-docs'
