@@ -9,7 +9,4 @@ import com.buschmais.xo.neo4j.api.annotation.Label;
 @Label("Export")
 public interface ExportDescriptor extends NPMDescriptor, NamedDescriptor {
 
-    String getPath();
-
-    void setPath(String path);
 }

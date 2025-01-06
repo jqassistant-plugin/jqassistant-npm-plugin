@@ -1,18 +1,21 @@
 package org.jqassistant.plugin.npm.impl.mapper;
 
-import com.buschmais.jqassistant.core.scanner.api.Scanner;
-import com.buschmais.jqassistant.core.store.api.Store;
-import com.buschmais.jqassistant.plugin.common.api.mapper.DescriptorMapper;
-import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
-import com.buschmais.jqassistant.plugin.json.api.model.JSONFileDescriptor;
-import org.jqassistant.plugin.npm.api.model.*;
-import org.jqassistant.plugin.npm.impl.model.Package;
-import org.mapstruct.*;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+
+import com.buschmais.jqassistant.core.scanner.api.Scanner;
+import com.buschmais.jqassistant.core.store.api.Store;
+import com.buschmais.jqassistant.plugin.common.api.mapper.DescriptorMapper;
+import com.buschmais.jqassistant.plugin.common.api.model.FileDescriptor;
+import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
+import com.buschmais.jqassistant.plugin.common.api.scanner.FileResolver;
+import com.buschmais.jqassistant.plugin.json.api.model.JSONFileDescriptor;
+
+import org.jqassistant.plugin.npm.api.model.*;
+import org.jqassistant.plugin.npm.impl.model.Package;
+import org.mapstruct.*;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
@@ -27,6 +30,7 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Override
     @Mapping(source = "bugs", target = "bugTracker")
     @Mapping(source = "bin", target = "binaries")
+    @Mapping(source = "man", target = "mans", qualifiedByName = "manMapping")
     @Mapping(source = "repository", target = "repository")
     @Mapping(source = "scripts", target = "scripts", qualifiedByName = "scriptsMapping")
     @Mapping(source = "config", target = "config", qualifiedByName = "configMapping")
@@ -159,8 +163,37 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     }
 
     @Named("exportMapping")
-    default List<ExportDescriptor> exportMapping(Map<String, String> sourceField, @Context Scanner scanner) {
-        return mapMapProperty(sourceField, ExportDescriptor.class, ExportDescriptor::setPath, scanner);
+    default List<ExportDescriptor> exportMapping(Map<String, String> map, @Context Scanner scanner) {
+        FileResolver fileResolver = scanner.getContext()
+            .peek(FileResolver.class);
+        if (map != null) {
+            return map.entrySet()
+                .stream()
+                .map(entry -> {
+                    FileDescriptor fileDescriptor = fileResolver.require(entry.getValue(), FileDescriptor.class, scanner.getContext());
+                    ExportDescriptor exportDescriptor = scanner.getContext()
+                        .getStore()
+                        .addDescriptorType(fileDescriptor, ExportDescriptor.class);
+                    exportDescriptor.setName(entry.getKey());
+                    return exportDescriptor;
+                })
+                .collect(toList());
+        }
+        return emptyList();
+    }
+
+    @Named("manMapping")
+    default List<ManDescriptor> manMapping(String[] sourceField, @Context Scanner scanner) {
+        if (sourceField != null) {
+            return Arrays.stream(sourceField)
+                .map(man -> {
+                    ManDescriptor descriptor = scanner.getContext().getStore().create(ManDescriptor.class);
+                    descriptor.setFile(man);
+                    return descriptor;
+                })
+                .collect(toList());
+        }
+        return emptyList();
     }
 
     @Named("cpuMapping")

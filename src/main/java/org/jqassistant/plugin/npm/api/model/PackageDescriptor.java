@@ -50,6 +50,9 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
     @Relation("HAS_BINARY")
     List<BinaryDescriptor> getBinaries();
 
+    @Relation("HAS_MAN")
+    List<ManDescriptor> getMans();
+
     @Relation("IN_REPOSITORY")
     RepositoryDescriptor getRepository();
 

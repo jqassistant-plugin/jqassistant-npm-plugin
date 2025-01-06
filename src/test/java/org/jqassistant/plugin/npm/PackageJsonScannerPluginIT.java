@@ -2,11 +2,13 @@ package org.jqassistant.plugin.npm;
 
 import com.buschmais.jqassistant.core.scanner.api.DefaultScope;
 import com.buschmais.jqassistant.core.test.plugin.AbstractPluginIT;
+import com.buschmais.jqassistant.plugin.common.api.model.FileDescriptor;
 import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
 import org.jqassistant.plugin.npm.api.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -34,7 +36,6 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         File file = new File(getClassesDirectory(PackageJsonScannerPluginIT.class), "full/package.json");
 
         PackageDescriptor packageJson = getScanner().scan(file, "/full/package.json", DefaultScope.NONE);
-
         store.beginTransaction();
         assertThat(packageJson).isNotNull();
         assertThat(packageJson.getName()).isEqualTo("jqa-npm-test");
@@ -71,10 +72,10 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         Map<String, ExportDescriptor> exportsByName = packageJson.getExports()
             .stream()
             .collect(toMap(NamedDescriptor::getName, Function.identity()));
-        assertThat(exportsByName.get("jqa-npm-test").getPath()).isEqualTo("./lib/index.js");
-        assertThat(exportsByName.get("jqa-npm-test/lib").getPath()).isEqualTo("./lib/index.js");
-        assertThat(exportsByName.get("jqa-npm-test/lib/*").getPath()).isEqualTo("./lib/*.js");
-        assertThat(exportsByName.get("jqa-npm-test/lib/*.js").getPath()).isEqualTo("./lib/*.js");
+        assertThat(((FileDescriptor) exportsByName.get("jqa-npm-test")).getFileName()).isEqualTo("./lib/index.js");
+        assertThat(((FileDescriptor) exportsByName.get("jqa-npm-test/bib")).getFileName()).isEqualTo("./bib/index.js");
+        assertThat(((FileDescriptor) exportsByName.get("jqa-npm-test/lib/*")).getFileName()).isEqualTo("./lib/*.js");
+        assertThat(((FileDescriptor) exportsByName.get("jqa-npm-test/bib/*.js")).getFileName()).isEqualTo("./bib/*.js");
 
         assertThat(packageJson.getMain()).isEqualTo("test.js");
         assertThat(packageJson.getBrowser()).isEqualTo("test2.js");
@@ -86,6 +87,13 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(binByName)
             .containsEntry("bin1", "script1.js")
             .containsEntry("bin2", "script2.js");
+
+        List<ManDescriptor> mans = packageJson.getMans();
+        assertThat(mans.size()).isEqualTo(2);
+        List<String> values = new ArrayList<>();
+        mans.forEach(man -> values.add(man.getFile()));
+        assertThat(values).contains("./man/foo.1");
+        assertThat(values).contains("./man/bar.1");
 
         RepositoryDescriptor repo = packageJson.getRepository();
         assertThat(repo.getType()).isEqualTo("git");
@@ -248,7 +256,7 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(packageJson.getExports()).hasSize(1);
         ExportDescriptor export = packageJson.getExports().get(0);
         assertThat(export.getName()).isEqualTo("jqa-npm-test");
-        assertThat(export.getPath()).isEqualTo("./index.js");
+        assertThat(((FileDescriptor) export).getFileName()).isEqualTo("./index.js");
 
         store.commitTransaction();
     }
@@ -265,6 +273,23 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(packageJson.getRepository()).isNotNull();
         RepositoryDescriptor repo = packageJson.getRepository();
         assertThat(repo.getUrl()).isEqualTo("bitbucket:user/repo");
+
+        store.commitTransaction();
+    }
+
+    @Test
+    void manAsString() {
+        File file = new File(getClassesDirectory(PackageJsonScannerPluginIT.class), "man-string/package.json");
+
+        PackageDescriptor packageJson = getScanner().scan(file, "/man-string/package.json", DefaultScope.NONE);
+
+        store.beginTransaction();
+        assertThat(packageJson).isNotNull();
+
+        assertThat(packageJson.getMans()).isNotNull();
+        List<ManDescriptor> man = packageJson.getMans();
+        assertThat(man.size()).isEqualTo(1);
+        assertThat(man.get(0).getFile()).isEqualTo("./man/doc.1");
 
         store.commitTransaction();
     }

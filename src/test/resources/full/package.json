@@ -41,9 +41,9 @@
   ],
   "exports": {
     ".": "./lib/index.js",
-    "./lib": "./lib/index.js",
+    "./bib": "./bib/index.js",
     "./lib/*": "./lib/*.js",
-    "./lib/*.js": "./lib/*.js"
+    "./bib/*.js": "./bib/*.js"
   },
   "main": "test.js",
   "browser": "test2.js",
@@ -131,5 +131,6 @@
       "react-app/jest"
     ]
   },
+  "workspaces": ["./packages/*"],
   "private": true
 }
