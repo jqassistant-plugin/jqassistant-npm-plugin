@@ -91,7 +91,7 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         List<ManDescriptor> mans = packageJson.getMans();
         assertThat(mans.size()).isEqualTo(2);
         List<String> values = new ArrayList<>();
-        mans.forEach(man -> values.add(man.getFile()));
+        mans.forEach(man -> values.add(((FileDescriptor) man).getFileName()));
         assertThat(values).contains("./man/foo.1");
         assertThat(values).contains("./man/bar.1");
 
@@ -166,8 +166,7 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         Map<String, String> overridesByName = packageJson.getOverrides()
             .stream()
             .collect(toMap(NamedDescriptor::getName, OverridesDescriptor::getVersion));
-        assertThat(overridesByName).hasSize(8);
-        assertThat(overridesByName).containsEntry("moo", "1.0.0").containsEntry("boo", "2.0.0")
+        assertThat(overridesByName).hasSize(8).containsEntry("moo", "1.0.0").containsEntry("boo", "2.0.0")
             .containsEntry("boo/bar", "4.0.0").containsEntry("dar/doo", "6.0.0").containsEntry("baz/boz/biz", "7.0.0")
             .containsEntry("lar@2.0.0/loo", "8.0.0").containsEntry("soo", "3.0.0 - 2.9999.9999").containsEntry("joo", "3.0.0 - 2.9999.9999");
 
@@ -289,7 +288,7 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(packageJson.getMans()).isNotNull();
         List<ManDescriptor> man = packageJson.getMans();
         assertThat(man.size()).isEqualTo(1);
-        assertThat(man.get(0).getFile()).isEqualTo("./man/doc.1");
+        assertThat(((FileDescriptor) man.get(0)).getFileName()).isEqualTo("./man/doc.1");
 
         store.commitTransaction();
     }

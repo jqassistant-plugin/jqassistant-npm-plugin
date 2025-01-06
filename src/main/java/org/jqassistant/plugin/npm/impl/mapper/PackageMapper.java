@@ -185,11 +185,15 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Named("manMapping")
     default List<ManDescriptor> manMapping(String[] sourceField, @Context Scanner scanner) {
         if (sourceField != null) {
+            FileResolver fileResolver = scanner.getContext()
+                .peek(FileResolver.class);
             return Arrays.stream(sourceField)
                 .map(man -> {
-                    ManDescriptor descriptor = scanner.getContext().getStore().create(ManDescriptor.class);
-                    descriptor.setFile(man);
-                    return descriptor;
+                    FileDescriptor fileDescriptor = fileResolver.require(man, FileDescriptor.class, scanner.getContext());
+                    fileDescriptor.setFileName(man);
+                    return scanner.getContext()
+                        .getStore()
+                        .addDescriptorType(fileDescriptor, ManDescriptor.class);
                 })
                 .collect(toList());
         }
