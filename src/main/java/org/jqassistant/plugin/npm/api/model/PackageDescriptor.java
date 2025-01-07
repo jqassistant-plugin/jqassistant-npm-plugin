@@ -107,6 +107,12 @@ public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
     @Relation("DECLARES_DEV_ENGINE")
     List<DevEngineDescriptor> getDevEngines();
 
+    @Relation("DECLARES_PUBLISH_CONFIG")
+    List<PublishConfigDescriptor> getPublishConfig();
+
+    @Relation("DECLARES_WORKSPACE")
+    List<WorkspaceDescriptor> getWorkspaces();
+
     String getPrivate();
 
     void setPrivate(String privat);

@@ -1,9 +1,9 @@
 ---
 title: jQAssistant Example Plugin
 ---
-# jQAssistant Example Plugin
+# jQAssistant npm Plugin
 
-This is the Example Plugin for [jQAssistant](https://jqassistant.org).
+This is the npm Plugin for [jQAssistant](https://jqassistant.org).
 
 ## Installation
 
@@ -12,22 +12,36 @@ Add the plugin to the `plugins` section of the `jqassistant.yml` configuration f
 ```yaml
 jqassistant:
   plugins:
-    # Includes the jQAssistant Example plugin
+    # Includes the jQAssistant NPM plugin
     - group-id: org.jqassistant.plugin
-      artifact-id: jqassistant-example-plugin
-      version: 1.0.0-SNAPSHOT
+      artifact-id: jqassistant-npm-plugin
+      version: 2.0.0-SNAPSHOT
+  scan:
+    include:
+      files:
+        - ${project.basedir}/package.json
 ```
 
-## Usage
+**Node-types:**
 
-> [!INFO]
-> List of links to notes that describe the various nodes, relations, properties, concepts, and constraints that the plugin provides.
-> This section may also link to additional usage guides, examples, etc. that may be relevant for developers *using* this plugin.
-> Notes that are part of this section shall be placed in the `usage` directory
-
-> [!INFO]
-> You can use the Obsidian templates when creating new notes to have a consistent style across the documentation (shortcut `Ctrl-T`)
-
+- [[Node - NPM Package|Package]]
+	- [[Node - NPM Binary|Binary]]
+	- [[Node - NPM BugTracker|BugTracker]]
+	- [[Node - NPM Config|Config]]
+	- [[Node - NPM Cpu|Cpu]]
+	- [[Node - NPM Dependency|Dependency]]
+	- [[Node - NPM DevEngine|DevEngine]]
+	- [[Node - NPM Engine|Engine]]
+	- [[Node - NPM Export|Export]]
+	- [[Node - NPM Funding|Funding]]
+	- [[Node - NPM Man|Man]]
+	- [[Node - NPM Os|Os]]
+	- [[Node - npm Overrides|Overrides]]
+	- [[Node - NPM Person|Person]]
+	- [[Node - NPM PublishConfig|PublishConfig]]
+	- [[Node - NPM Repository|Repository]]
+	- [[Node - NPM Script|Script]]
+	- [[Node - NPM Workspace|Workspace]]
 ## Development
 
 > [!INFO]

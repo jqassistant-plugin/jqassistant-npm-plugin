@@ -21,8 +21,13 @@
         <class>org.jqassistant.plugin.npm.api.model.DevEngineDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.ExportDescriptor</class>
         <class>org.jqassistant.plugin.npm.api.model.OverridesDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.PublishConfigDescriptor</class>
+        <class>org.jqassistant.plugin.npm.api.model.WorkspaceDescriptor</class>
     </model>
     <scanner>
         <class>org.jqassistant.plugin.npm.impl.PackageJsonScannerPlugin</class>
     </scanner>
+    <rules>
+        <resource>npm.xml</resource>
+    </rules>
 </jqassistant-plugin>

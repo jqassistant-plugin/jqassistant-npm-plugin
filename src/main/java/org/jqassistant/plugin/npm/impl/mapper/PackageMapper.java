@@ -8,6 +8,7 @@ import java.util.function.BiConsumer;
 import com.buschmais.jqassistant.core.scanner.api.Scanner;
 import com.buschmais.jqassistant.core.store.api.Store;
 import com.buschmais.jqassistant.plugin.common.api.mapper.DescriptorMapper;
+import com.buschmais.jqassistant.plugin.common.api.model.DirectoryDescriptor;
 import com.buschmais.jqassistant.plugin.common.api.model.FileDescriptor;
 import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
 import com.buschmais.jqassistant.plugin.common.api.scanner.FileResolver;
@@ -45,6 +46,8 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
     @Mapping(source = "engines", target = "engines", qualifiedByName = "engineMapping")
     @Mapping(source = "devEngines", target = "devEngines")
     @Mapping(source = "privat", target = "private")
+    @Mapping(source = "publishConfig", target = "publishConfig", qualifiedByName = "publishConfigMapping")
+    @Mapping(source = "workspaces", target = "workspaces", qualifiedByName = "workspacesMapping")
     PackageDescriptor toDescriptor(Package value, @Context Scanner scanner);
 
     @AfterMapping
@@ -142,6 +145,11 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
         return mapMapProperty(sourceField, OverridesDescriptor.class, OverridesDescriptor::setVersion, scanner);
     }
 
+    @Named("publishConfigMapping")
+    default List<PublishConfigDescriptor> publishConfigMapping(Map<String, String> sourceField, @Context Scanner scanner) {
+        return mapMapProperty(sourceField, PublishConfigDescriptor.class, PublishConfigDescriptor::setValue, scanner);
+    }
+
     @Named("osMapping")
     default List<OsDescriptor> osMapping(String[] sourceField, @Context Scanner scanner) {
         if (sourceField != null) {
@@ -214,6 +222,23 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
                         descriptor.setName(cpu);
                     }
                     return descriptor;
+                })
+                .collect(toList());
+        }
+        return emptyList();
+    }
+
+    @Named("workspacesMapping")
+    default List<WorkspaceDescriptor> workspacesMapping(String[] sourceField, @Context Scanner scanner) {
+        if (sourceField != null) {
+            FileResolver fileResolver = scanner.getContext()
+                .peek(FileResolver.class);
+            return Arrays.stream(sourceField)
+                .map(workspace -> {
+                    DirectoryDescriptor directoryDescriptor = fileResolver.require(workspace, DirectoryDescriptor.class, scanner.getContext());
+                        return scanner.getContext()
+                                .getStore()
+                                .addDescriptorType(directoryDescriptor, WorkspaceDescriptor.class);
                 })
                 .collect(toList());
         }

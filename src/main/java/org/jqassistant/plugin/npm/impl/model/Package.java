@@ -80,4 +80,8 @@ public class Package {
 
     private String privat;
 
+    private Map<String, String> publishConfig;
+
+    private String[] workspaces;
+
 }

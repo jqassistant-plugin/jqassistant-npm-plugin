@@ -131,6 +131,14 @@
       "react-app/jest"
     ]
   },
-  "workspaces": ["./packages/*"],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "tag": "latest"
+  },
+  "workspaces": [
+    ".packages/",
+    ".apps/"
+  ],
   "private": true
 }

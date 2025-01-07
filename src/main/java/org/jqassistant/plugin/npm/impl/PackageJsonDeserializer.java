@@ -63,6 +63,8 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     case "devEngines": result.setDevEngines(deserializeDevEnginesProperty(valueNode)); break;
                     case "private": result.setPrivat(deserializeBooleanProperty("private", valueNode)); break;
                     case "man": result.setMan(deserializeStringOrArrayProperty("man", valueNode)); break;
+                    case "publishConfig": result.setPublishConfig(deserializeStringMap("publishConfig", valueNode)); break;
+                    case "workspaces": result.setWorkspaces(deserializeStringArrayProperty("workspaces", valueNode)); break;
                     default: log.error("Encountered unknown top-level property in package.json ({})", packageJsonProperty.getKey());
                 }
             });

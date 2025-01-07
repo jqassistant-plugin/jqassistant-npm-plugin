@@ -1,9 +1,13 @@
 package org.jqassistant.plugin.npm;
 
 import com.buschmais.jqassistant.core.scanner.api.DefaultScope;
+import com.buschmais.jqassistant.core.scanner.api.Scanner;
 import com.buschmais.jqassistant.core.test.plugin.AbstractPluginIT;
+import com.buschmais.jqassistant.plugin.common.api.model.DirectoryDescriptor;
 import com.buschmais.jqassistant.plugin.common.api.model.FileDescriptor;
 import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
+import com.buschmais.jqassistant.plugin.common.api.scanner.FileResolver;
+
 import org.jqassistant.plugin.npm.api.model.*;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +27,6 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         File file = new File(getClassesDirectory(PackageJsonScannerPluginIT.class), "minimal/package.json");
 
         PackageDescriptor packageJson = getScanner().scan(file, "/minimal/package.json", DefaultScope.NONE);
-
         store.beginTransaction();
         assertThat(packageJson).isNotNull();
         assertThat(packageJson.getName()).isEqualTo("jqa-npm-test");
@@ -176,6 +179,18 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         assertThat(enginesByName).containsEntry("node", ">=14")
             .containsEntry("npm", ">=6");
 
+        Map<String, String> publishConfigByName = packageJson.getPublishConfig()
+            .stream()
+            .collect(toMap(NamedDescriptor::getName, PublishConfigDescriptor::getValue));
+        assertThat(publishConfigByName).containsEntry("registry", "https://registry.npmjs.org/")
+            .containsEntry("access", "public").containsEntry("tag", "latest");
+
+        List<WorkspaceDescriptor> workspaces = packageJson.getWorkspaces();
+        assertThat(workspaces.size()).isEqualTo(2);
+        List<String> values1 = new ArrayList<>();
+        workspaces.forEach(workspace  -> values1.add(((FileDescriptor) workspace ).getFileName()));
+        assertThat(values1).contains(".packages/");
+        assertThat(values1).contains(".apps/");
 
 
         store.commitTransaction();
