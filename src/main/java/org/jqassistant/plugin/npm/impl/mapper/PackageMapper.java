@@ -118,6 +118,19 @@ public interface PackageMapper extends DescriptorMapper<Package, PackageDescript
                     }
                 );
         }
+
+        if (source.getRepository() != null) {
+            if (source.getRepository()
+                .getDirectory() != null) {
+                String directoryName = source.getRepository()
+                    .getDirectory();
+                FileResolver fileResolver = scanner.getContext()
+                    .peek(FileResolver.class);
+                DirectoryDescriptor directoryDescriptor = fileResolver.require(directoryName, DirectoryDescriptor.class, scanner.getContext());
+                target.getRepository()
+                    .setDirectory(directoryDescriptor);
+            }
+        }
     }
 
     @Named("scriptsMapping")
