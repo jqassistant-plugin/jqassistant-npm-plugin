@@ -1,21 +1,18 @@
 package org.jqassistant.plugin.npm;
 
-import com.buschmais.jqassistant.core.scanner.api.DefaultScope;
-import com.buschmais.jqassistant.core.scanner.api.Scanner;
-import com.buschmais.jqassistant.core.test.plugin.AbstractPluginIT;
-import com.buschmais.jqassistant.plugin.common.api.model.DirectoryDescriptor;
-import com.buschmais.jqassistant.plugin.common.api.model.FileDescriptor;
-import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
-import com.buschmais.jqassistant.plugin.common.api.scanner.FileResolver;
-
-import org.jqassistant.plugin.npm.api.model.*;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+
+import com.buschmais.jqassistant.core.scanner.api.DefaultScope;
+import com.buschmais.jqassistant.core.test.plugin.AbstractPluginIT;
+import com.buschmais.jqassistant.plugin.common.api.model.FileDescriptor;
+import com.buschmais.jqassistant.plugin.common.api.model.NamedDescriptor;
+
+import org.jqassistant.plugin.npm.api.model.*;
+import org.junit.jupiter.api.Test;
 
 import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -186,11 +183,12 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
             .containsEntry("access", "public").containsEntry("tag", "latest");
 
         List<WorkspaceDescriptor> workspaces = packageJson.getWorkspaces();
-        assertThat(workspaces.size()).isEqualTo(2);
+        assertThat(workspaces.size()).isEqualTo(3);
         List<String> values1 = new ArrayList<>();
         workspaces.forEach(workspace  -> values1.add(((FileDescriptor) workspace ).getFileName()));
         assertThat(values1).contains(".packages/");
         assertThat(values1).contains(".apps/");
+        assertThat(values1).contains(".playground/");
 
 
         store.commitTransaction();

@@ -6,20 +6,20 @@
         <description>As workspace defined folders will be treated as npm workspaces as long as they have valid package.json files inside them.
         </description>
         <cypher><![CDATA[
-          MATCH
-            (package:NPM:Package)-[rel:DECLARES_WORKSPACE]->(dir:NPM:Workspace:Directory)
-          WHERE NOT EXISTS {
-                MATCH
-                    (file:File:Json)-[:CONTAINS]->(dir)
-                WHERE
-                    file.fileName ENDS WITH '/package.json'
-                }
-          REMOVE
-            dir:Workspace:NPM
-          DELETE
-            rel
-          RETURN
-            dir AS NoWorkspaceDirectories
-        ]]></cypher>
+      MATCH
+         (package:NPM:Package)-[rel:DECLARES_WORKSPACE]->(dir:NPM:Workspace:Directory)
+      WHERE NOT EXISTS {
+      MATCH
+        (dir)-[:CONTAINS]->(packageJSON:File:Json)
+      WHERE
+        packageJSON.fileName ENDS WITH 'package.json'
+        }
+      WITH dir, rel, package
+      DETACH DELETE  dir
+      DELETE rel
+      WITH package
+      MATCH (package)-[:DECLARES_WORKSPACE]->(workspaces:Workspace)
+      RETURN workspaces AS workspaceDirectories
+      ]]></cypher>
     </concept>
 </jqassistant-rules>
