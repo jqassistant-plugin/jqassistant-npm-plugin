@@ -4,7 +4,7 @@
   
 ## Properties  
   
-| Name           | Description        |
-| -------------- | ------------------ |
-| `name`         | name of the binary |
-| `versionRange` | id of the AsyncAPI |
+| Name           | Description                    |
+| -------------- | ------------------------------ |
+| `name`         | name of the engine             |
+| `versionRange` | range of version of the engine |

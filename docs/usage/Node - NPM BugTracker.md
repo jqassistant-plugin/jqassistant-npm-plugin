@@ -5,7 +5,7 @@
   
 ## Properties  
   
-| Name    | Description        |
-| ------- | ------------------ |
-| `email` | name of the binary |
-| `url`   | id of the AsyncAPI |
+| Name    | Description                              |
+| ------- | ---------------------------------------- |
+| `email` | email address to write to reporting bugs |
+| `url`   | URL to your project's issue tracker      |

@@ -5,7 +5,7 @@
   
 ## Properties  
   
-| Name   | Description        |
-| ------ | ------------------ |
-| `name` | name of the binary |
-| `path` | id of the AsyncAPI |
+| Name   | Description                |
+| ------ | -------------------------- |
+| `name` | name of the executable(s)  |
+| `path` | path to executable(s) file |

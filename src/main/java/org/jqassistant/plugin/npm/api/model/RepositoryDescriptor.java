@@ -5,7 +5,7 @@ import com.buschmais.xo.neo4j.api.annotation.Label;
 import com.buschmais.xo.neo4j.api.annotation.Relation;
 
 /**
- * Represents an entry point (alternative to main).
+ * Represents the repository of the package.
  */
 @Label("Repository")
 public interface RepositoryDescriptor extends NPMDescriptor {

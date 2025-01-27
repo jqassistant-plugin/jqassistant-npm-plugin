@@ -25,7 +25,7 @@ jqassistant:
 
 == Reference Documentation
 
-*To be replaced by Quartz Docs...*
+**For more information, refer to the https://jqassistant-plugin.github.io/jqassistant-npm-plugin[Documentation].**
 
 === Scanner for `package.json` files
 

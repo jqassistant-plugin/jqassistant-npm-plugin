@@ -2,10 +2,8 @@
   
 -> represents a file for the man program to find
   
-  
 ## Properties  
   
-| Name       | Description        |
-| ---------- | ------------------ |
-| `name`     | name of the binary |
-| `fileName` | id of the AsyncAPI |
+| Name       | Description          |
+| ---------- | -------------------- |
+| `fileName` | name of the man file |

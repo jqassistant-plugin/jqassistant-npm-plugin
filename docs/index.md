@@ -36,7 +36,7 @@ jqassistant:
 	- [[Node - NPM Funding|Funding]]
 	- [[Node - NPM Man|Man]]
 	- [[Node - NPM Os|Os]]
-	- [[Node - npm Overrides|Overrides]]
+	- [[Node - NPM Overrides|Overrides]]
 	- [[Node - NPM Person|Person]]
 	- [[Node - NPM PublishConfig|PublishConfig]]
 	- [[Node - NPM Repository|Repository]]

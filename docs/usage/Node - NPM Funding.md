@@ -1,11 +1,11 @@
-# `:NPM:Binary` Node  
+# `:NPM:Funding Node  
   
 -> represents information about where to fund a package
   
-  
 ## Properties  
   
-| Name   | Description        |
-| ------ | ------------------ |
-| `type` | name of the binary |
-| `url`  | id of the AsyncAPI |
+| Name   | Description                      |
+| ------ | -------------------------------- |
+| `name` | name of the funding              |
+| `type` | type of the funding e.g. patreon |
+| `url`  | url of the funding               |
