@@ -1,4 +1,4 @@
-# `:NPM:Funding Node  
+# `:NPM:Funding` Node  
   
 -> represents information about where to fund a package
   

@@ -17,3 +17,6 @@ pom.xml.updatetonextdevversion
 # Maven related files and directories
 target
 /.mvn
+
+# Docs
+docs/.obsidian/workspace.json

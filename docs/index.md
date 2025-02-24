@@ -3,8 +3,8 @@ title: jQAssistant Example Plugin
 ---
 # jQAssistant npm Plugin
 
-This is the npm Plugin for [jQAssistant](https://jqassistant.org).
-It provides a scanner for`package.json` files of npm projects.
+This is the [npm](https://www.npmjs.com) Plugin for [jQAssistant](https://jqassistant.org).
+It provides a scanner for `package.json` files of npm projects.
 ## Installation
 
 Add the plugin to the `plugins` section of the `jqassistant.yml` configuration file:
@@ -15,7 +15,7 @@ jqassistant:
     # Includes the jQAssistant NPM plugin
     - group-id: org.jqassistant.plugin
       artifact-id: jqassistant-npm-plugin
-      version: 2.0.0-SNAPSHOT
+      version: 2.1.0
   scan:
     include:
       files:

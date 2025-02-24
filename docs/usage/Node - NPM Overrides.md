@@ -1,4 +1,4 @@
-# `:NPM:Overrides Node  
+# `:NPM:Overrides` Node  
   
 -> represents a specific change to a dependency
   
