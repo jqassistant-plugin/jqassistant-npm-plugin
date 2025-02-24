@@ -1,4 +1,4 @@
-# `:NPM:Package Node  
+# `:NPM:Package:Json:File Node  
   
 -> represents information about executable files of the package that should be installed in PATH
   
@@ -24,8 +24,8 @@
 ## Relations  
   
 | Name                       | Target Label(s)                                         | Cardinality | Description                                                      |
-| -------------------------- |---------------------------------------------------------| ----------- |------------------------------------------------------------------|
-| `HAS_EXPORT`               | [[Node - NPM Export\|:File:NPM:Export]]                 | 0..*        | entry point(s) of the package                                    |
+| -------------------------- | ------------------------------------------------------- | ----------- | ---------------------------------------------------------------- |
+| `HAS_EXPORT`               | [[Node - NPM Export\|:NPM:Export:File]]                 | 0..*        | entry point(s) of the package                                    |
 | `HAS_BINARY`               | [[Node - NPM Binary\|:NPM:Binary]]                      | 0..*        | executable files of the package that should be installed in PATH |
 | `HAS_MAN`                  | [[Node - NPM Man\|:NPM:Man]]                            | 0..*        | a file for the man program to find                               |
 | `IN_REPOSITORY`            | [[Node - NPM Repository\|:NPM:Repository]]              | 0..1        | the repository of the package                                    |
@@ -45,4 +45,4 @@
 | `DECLARES_CPU`             | [[Node - NPM Cpu\|:NPM:Cpu]]                            | 0..*        | cpu architectures the code runs on                               |
 | `DECLARES_DEV_ENGINE`      | [[Node - NPM DevEngine\|:NPM:DevEngine]]                | 0..*        | developer engines                                                |
 | `DECLARES_PUBLISH_CONFIG`  | [[Node - NPM PublishConfig\|:NPM:PublishConfig]]        | 0..*        | set of config values used in publish-time                        |
-| `DECLARES_WORKSPACE`       | [[Node - NPM Workspace\|:File:Directory:NPM:Workspace]] | 0..*        | locations of the workspaces                                      |
+| `DECLARES_WORKSPACE`       | [[Node - NPM Workspace\|:NPM:Workspace:File:Directory]] | 0..*        | locations of the workspaces                                      |

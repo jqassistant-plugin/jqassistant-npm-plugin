@@ -4,7 +4,7 @@ title: jQAssistant Example Plugin
 # jQAssistant npm Plugin
 
 This is the npm Plugin for [jQAssistant](https://jqassistant.org).
-
+It provides a scanner for`package.json` files of npm projects.
 ## Installation
 
 Add the plugin to the `plugins` section of the `jqassistant.yml` configuration file:
@@ -22,24 +22,31 @@ jqassistant:
         - ${project.basedir}/package.json
 ```
 
-**Package Node:** [[Node - NPM Package|Package]]
-**Field Nodes:**
-- [[Node - NPM Binary|Binary]]
-- [[Node - NPM BugTracker|BugTracker]]
-- [[Node - NPM Config|Config]]
-- [[Node - NPM Cpu|Cpu]]
-- [[Node - NPM Dependency|Dependency]]
-- [[Node - NPM DevEngine|DevEngine]]
-- [[Node - NPM Engine|Engine]]
-- [[Node - NPM Export|Export]]
-- [[Node - NPM Funding|Funding]]
-- [[Node - NPM Man|Man]]
-- [[Node - NPM Os|Os]]
-- [[Node - NPM Overrides|Overrides]]
-- [[Node - NPM Person|Person]]
-- [[Node - NPM PublishConfig|PublishConfig]]
-- [[Node - NPM Repository|Repository]]
-- [[Node - NPM Script|Script]]
-- [[Node - NPM Workspace|Workspace]]
+## Reference Documentation
+
+The plugin provides a scanner which accepts files with the name `package.json` and creates the structure as described in this section, using the items defined in the [npm Docs](https://docs.npmjs.com/cli/v10/configuring-npm/package-json) and having nodes labeled with [[Node - NPM Package|:NPM:Package:Json:File]] as entry point.
+
+**Node-Types:**
+
+- [[Node - NPM Package|:NPM:Package:Json:File]]
+	- [[Node - NPM Binary|:NPM:Binary]]
+	- [[Node - NPM BugTracker|:NPM:BugTracker]]
+	- [[Node - NPM Config|:NPM:Config]]
+	- [[Node - NPM Cpu|:NPM:Cpu]]
+	- [[Node - NPM Dependency|:NPM:Dependency]]
+	- [[Node - NPM DevEngine|:NPM:DevEngine]]
+	- [[Node - NPM Engine|:NPM:Engine]]
+	- [[Node - NPM Export|:NPM:Export:File]]
+	- [[Node - NPM Funding|:NPM:Funding]]
+	- [[Node - NPM Man|:NPM:Man]]
+	- [[Node - NPM Os|:NPM:Os]]
+	- [[Node - NPM Overrides|:NPM:Overrides]]
+	- [[Node - NPM Person|:NPM:Person]]
+	- [[Node - NPM PublishConfig|:NPM:PublishConfig]]
+	- [[Node - NPM Repository|:NPM:Repository]]
+	- [[Node - NPM Script|:NPM:Script]]
+	- [[Node - NPM Workspace|:NPM:Workspace:File:Directory]]
+
 **Concepts:**
+
 - [[Concept - NPM ResolveWorkspaces |ResolveWorkspaces]]
