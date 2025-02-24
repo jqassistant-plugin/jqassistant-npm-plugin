@@ -1,8 +1,7 @@
-# `:NPM:Package:Json:File Node  
+# `:NPM:Package:Json:File` Node  
   
 -> represents information about executable files of the package that should be installed in PATH
-  
-  
+
 ## Properties  
   
 | Name          | Description                                                                                                      |
@@ -19,8 +18,6 @@
 | `browser`     | module id that is the entry point in case of a client-side use of the module                                     |
 | `private`     | specifies if the package is private; if **true**, npm will prevent it from being published or installed publicly |
 
-
-  
 ## Relations  
   
 | Name                       | Target Label(s)                                         | Cardinality | Description                                                      |

@@ -1,7 +1,6 @@
-# `:NPM:BugTracker Node  
+# `:NPM:BugTracker` Node  
   
 ->  represents information about where to report bugs
-  
   
 ## Properties  
   
