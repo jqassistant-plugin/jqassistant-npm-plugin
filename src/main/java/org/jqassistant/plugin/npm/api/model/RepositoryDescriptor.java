@@ -18,7 +18,7 @@ public interface RepositoryDescriptor extends NPMDescriptor {
 
     void setUrl(String url);
 
-    @Relation("IN_REPOSITORY")
+    @Relation("IN_DIRECTORY")
     DirectoryDescriptor getDirectory();
 
     void setDirectory(DirectoryDescriptor directory);

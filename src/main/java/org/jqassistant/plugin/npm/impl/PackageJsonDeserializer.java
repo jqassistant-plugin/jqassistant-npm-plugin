@@ -343,7 +343,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
             r.setUrl(node.textValue());
             return r;
         } else {
-            log.error("property bin is neither an object nor a string");
+            log.error("property repository is neither an object nor a string");
         }
         return null;
     }

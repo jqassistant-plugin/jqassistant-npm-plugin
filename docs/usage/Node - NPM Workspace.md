@@ -1,11 +1,12 @@
-# `:NPM:Workspace Node  
+# `:File:Directory:NPM:Workspace` Node  
   
--> represents information about executable files of the package that should be installed in PATH
+-> represents the location of a workspace
   
   
 ## Properties  
-  
-| Name | Description |
-| ---- | ----------- |
-|      |             |
-|      |             |
+
+| Name       | Description               |
+|------------|---------------------------|
+| `name`     | name of the workspace     |
+| `fileName` | location of the workspace |
+

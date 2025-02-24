@@ -1,4 +1,4 @@
-# `:NPM:File:Export` Node  
+# `:File:NPM:Export` Node  
   
 -> represents an entry point (alternative to main)
   
