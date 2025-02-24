@@ -46,7 +46,3 @@ The plugin provides a scanner which accepts files with the name `package.json` a
 	- [[Node - NPM Repository|:NPM:Repository]]
 	- [[Node - NPM Script|:NPM:Script]]
 	- [[Node - NPM Workspace|:NPM:Workspace:File:Directory]]
-
-**Concepts:**
-
-- [[Concept - NPM ResolveWorkspaces |ResolveWorkspaces]]

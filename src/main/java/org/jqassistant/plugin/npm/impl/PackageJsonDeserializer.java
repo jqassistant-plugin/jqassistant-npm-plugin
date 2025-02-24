@@ -417,25 +417,28 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
     private Map<String, String> deserializeOverridesField(Map<String, String> result, StringBuilder name, JsonNode node) {
         if (node.isTextual()) {
             result.put(name.toString(), node.textValue());
+        } else if (node.isObject()) {
+            node.fields().forEachRemaining(field -> {
+                    JsonNode value = field.getValue();
+                    if (value.isTextual()) {
+                        if (field.getKey().equals(".")) {
+                            result.put(name.toString(), field.getValue().textValue());
+                            Map<String, String> newResult = this.deserializeOverridesField(result, name, value);
+                            result.putAll(newResult);
+                        } else {
+                            String name1 = name.append("/").append(field.getKey()).toString();
+                            result.put(name1, field.getValue().textValue());
+                        }
+                    }
+                    if (value.isObject()) {
+                        name.append("/").append(field.getKey());
+                        Map<String, String> newResult1 = this.deserializeOverridesField(result, name, value);
+                        result.putAll(newResult1);
+                    }
+                });
+        } else {
+            log.error("overrides field {} is not an object nor a string", name);
         }
-        node.fields().forEachRemaining(field -> {
-            JsonNode value = field.getValue();
-            if (value.isTextual()) {
-                if (field.getKey().equals(".")) {
-                    result.put(name.toString(), field.getValue().textValue());
-                    Map<String, String> newResult = this.deserializeOverridesField(result, name, value);
-                    result.putAll(newResult);
-                } else {
-                    String name1 = name.append("/").append(field.getKey()).toString();
-                    result.put(name1, field.getValue().textValue());
-                }
-            }
-            if (value.isObject()) {
-                name.append("/").append(field.getKey());
-                Map<String, String> newResult1 = this.deserializeOverridesField(result, name, value);
-                result.putAll(newResult1);
-            }
-        });
         return result;
     }
 

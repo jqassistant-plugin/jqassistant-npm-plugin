@@ -98,7 +98,7 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         RepositoryDescriptor repo = packageJson.getRepository();
         assertThat(repo.getType()).isEqualTo("git");
         assertThat(repo.getUrl()).isEqualTo("git+https://github.com/npm/cli.git");
-        assertThat(repo.getDirectory().getFileName()).isEqualTo("workspaces/libnpmpublish");
+        assertThat(repo.getDirectory()).isEqualTo("workspaces/libnpmpublish");
 
         Map<String, String> scriptsByName = packageJson.getScripts()
             .stream()
