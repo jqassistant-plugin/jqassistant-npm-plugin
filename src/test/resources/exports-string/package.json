@@ -1,0 +1,4 @@
+{
+  "name": "jqa-npm-test",
+  "exports": "./index.js"
+}

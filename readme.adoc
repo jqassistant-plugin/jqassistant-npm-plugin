@@ -25,6 +25,8 @@ jqassistant:
 
 == Reference Documentation
 
+**For more information, refer to the https://jqassistant-plugin.github.io/jqassistant-npm-plugin[Documentation].**
+
 === Scanner for `package.json` files
 
 The plugin provides a scanner which accepts files with the name `package.json` and creates the structure as described in this section, using a subset of the items defined in https://docs.npmjs.com/cli/v9/configuring-npm/package-json[] and having nodes labeled with `:NPM:Package:Json:File` as entry point.

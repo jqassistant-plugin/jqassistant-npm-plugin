@@ -1,0 +1,25 @@
+<jqassistant-rules xmlns="http://schema.jqassistant.org/rule/v1.10"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://schema.jqassistant.org/rule/v1.10 https://schema.jqassistant.org/plugin/jqassistant-rule-v1.10.xsd">
+
+    <concept id="jqassistant-plugin-npm:ResolveWorkspaces">
+        <description>As workspace defined folders will be treated as npm workspaces as long as they have valid package.json files inside them.
+        </description>
+        <cypher><![CDATA[
+      MATCH
+         (package:NPM:Package)-[rel:DECLARES_WORKSPACE]->(dir:NPM:Workspace:Directory)
+      WHERE NOT EXISTS {
+      MATCH
+        (dir)-[:CONTAINS]->(packageJSON:File:Json)
+      WHERE
+        packageJSON.fileName ENDS WITH 'package.json'
+        }
+      WITH dir, rel, package
+      DETACH DELETE  dir
+      DELETE rel
+      WITH package
+      MATCH (package)-[:DECLARES_WORKSPACE]->(workspaces:Workspace)
+      RETURN workspaces AS workspaceDirectories
+      ]]></cypher>
+    </concept>
+</jqassistant-rules>

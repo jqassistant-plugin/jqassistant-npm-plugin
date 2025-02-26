@@ -39,15 +39,33 @@
   "files": [
     "dist/"
   ],
+  "exports": {
+    ".": "./lib/index.js",
+    "./bib": "./bib/index.js",
+    "./lib/*": "./lib/*.js",
+    "./bib/*.js": "./bib/*.js"
+  },
   "main": "test.js",
   "browser": "test2.js",
   "bin": {
     "bin1": "script1.js",
     "bin2": "script2.js"
   },
+  "man": [
+    "./man/foo.1",
+    "./man/bar.1"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm/cli.git",
+    "directory": "workspaces/libnpmpublish"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"
+  },
+  "config": {
+    "port": "8080"
   },
   "dependencies": {
     "react": "^17.0.2",
@@ -74,6 +92,26 @@
     "colors": "^1.4.0",
     "foo": "3.0.0 - 2.9999.9999"
   },
+  "overrides": {
+    "moo": "1.0.0",
+    "boo": {
+      ".": "2.0.0",
+      "bar": "4.0.0"
+    },
+    "dar": {
+      "doo": "6.0.0"
+    },
+    "baz": {
+      "boz": {
+        "biz": "7.0.0"
+      }
+    },
+    "lar@2.0.0": {
+      "loo": "8.0.0"
+    },
+    "soo": "$foo",
+    "joo": "$foo"
+  },
   "engines": {
     "node": ">=14",
     "npm": ">=6"
@@ -83,10 +121,25 @@
     "!linux",
     "win32"
   ],
-"eslintConfig": {
-"extends": [
-"react-app",
-"react-app/jest"
-]
-}
+  "cpu": [
+    "x64",
+    "!arm"
+  ],
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "tag": "latest"
+  },
+  "workspaces": [
+    ".packages/",
+    ".apps/",
+    ".playground/"
+  ],
+  "private": true
 }

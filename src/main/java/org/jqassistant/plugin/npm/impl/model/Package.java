@@ -40,13 +40,21 @@ public class Package {
 
     private String[] files;
 
+    private Map<String, String> exports;
+
     private String main;
 
     private String browser;
 
     private List<Binary> bin;
 
+    private String[] man;
+
+    private Repository repository;
+
     private Map<String, String> scripts;
+
+    private Map<String, String> config;
 
     private Map<String, String> dependencies;
 
@@ -60,8 +68,20 @@ public class Package {
 
     private Map<String, String> optionalDependencies;
 
+    private Map<String, String> overrides;
+
     private Map<String, String> engines;
 
     private String[] os;
+
+    private String[] cpu;
+
+    private List<DevEngine> devEngines;
+
+    private String privat;
+
+    private Map<String, String> publishConfig;
+
+    private String[] workspaces;
 
 }
