@@ -8,6 +8,12 @@ on:
     paths:
       - '.github/**'
       - 'docs/**'
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: "Version under which the docs should be published"
+        required: true
+        default: "current"
 
 permissions:
   contents: write
@@ -29,3 +35,4 @@ jobs:
         uses: RelativeProgramming/versioned-quartz-gh-pages-deploy@v1.0.0
         with:
           quartz-repo: 'jqassistant-tooling/jqassistant-quartz-docs'
+          deployment-version: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseVersion || 'current' }}
