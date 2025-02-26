@@ -437,7 +437,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
                     }
                 });
         } else {
-            log.error("overrides field {} is not an object nor a string", name);
+            log.error("overrides field {} is neither an object nor a string", name);
         }
         return result;
     }
