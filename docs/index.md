@@ -1,5 +1,5 @@
 ---
-title: jQAssistant Example Plugin
+title: jQAssistant npm Plugin
 ---
 # jQAssistant npm Plugin
 
