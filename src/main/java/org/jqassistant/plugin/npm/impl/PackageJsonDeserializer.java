@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
-import org.jqassistant.plugin.npm.impl.model.Package;
 import org.jqassistant.plugin.npm.impl.model.*;
+import org.jqassistant.plugin.npm.impl.model.Package;
 
 import java.io.IOException;
 import java.util.*;
@@ -335,9 +335,19 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
     private Repository deserializeRepositoryProperty(JsonNode node) {
         Repository r = new Repository();
         if (node.isObject()) {
-            r.setUrl(node.get("url").textValue());
-            r.setType(node.get("type").textValue());
-            r.setDirectory(node.get("directory").textValue());
+            if(node.has("url")) {
+                r.setUrl(deserializeStringProperty("repository.url", node.get("url")));
+            } else {
+                log.error("property repository does not contain a url");
+            }
+            if(node.has("type")) {
+                r.setType(deserializeStringProperty("repository.type", node.get("type")));
+            } else {
+                log.error("property repository does not contain a type");
+            }
+            if(node.has("directory")) {
+                r.setDirectory(deserializeStringProperty("repository.directory", node.get("directory")));
+            }
             return r;
         } else if (node.isTextual()) {
             r.setUrl(node.textValue());
