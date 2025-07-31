@@ -31,6 +31,7 @@ public class PackageJsonDeserializer extends JsonDeserializer<Package> {
             node.fields().forEachRemaining(packageJsonProperty -> {
                 JsonNode valueNode = packageJsonProperty.getValue();
                 switch (packageJsonProperty.getKey()) {
+                    case "type": result.setType(deserializeStringProperty("type", valueNode)); break;
                     case "name": result.setName(deserializeStringProperty("name", valueNode)); break;
                     case "version": result.setVersion(deserializeStringProperty("version", valueNode)); break;
                     case "description": result.setDescription(deserializeStringProperty("description", valueNode)); break;

@@ -18,6 +18,8 @@ import java.util.Map;
 @JsonDeserialize(using = PackageJsonDeserializer.class)
 public class Package {
 
+    private String type;
+
     private String name;
 
     private String version;
