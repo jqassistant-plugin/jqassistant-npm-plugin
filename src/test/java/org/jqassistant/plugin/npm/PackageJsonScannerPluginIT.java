@@ -38,6 +38,7 @@ class PackageJsonScannerPluginIT extends AbstractPluginIT {
         PackageDescriptor packageJson = getScanner().scan(file, "/full/package.json", DefaultScope.NONE);
         store.beginTransaction();
         assertThat(packageJson).isNotNull();
+        assertThat(packageJson.getType()).isEqualTo("module");
         assertThat(packageJson.getName()).isEqualTo("jqa-npm-test");
         assertThat(packageJson.getVersion()).isEqualTo("1.0.0");
         assertThat(packageJson.getDescription()).isEqualTo("Test Package Descriptor");
