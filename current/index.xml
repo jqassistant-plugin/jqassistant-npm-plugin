@@ -6,65 +6,65 @@
       <description>Last 10 notes on jQA npm Plugin</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>Node - NPM Repository</title>
+    <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Repository</link>
+    <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Repository</guid>
+    <description>:NPM:Repository Node → represents the repository of the package Properties NameDescriptiontypetype of the repourlurl of the repodirectorydirectory of the projects package.json ...</description>
+    <pubDate>Fri, 21 Nov 2025 13:49:33 GMT</pubDate>
+  </item><item>
+    <title>Node - NPM Script</title>
+    <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Script</link>
+    <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Script</guid>
+    <description>:NPM:Script Node → represents a script Properties NameDescriptionnamename of the scriptscriptcontent of the script.</description>
+    <pubDate>Fri, 21 Nov 2025 13:49:33 GMT</pubDate>
+  </item><item>
     <title>Node - NPM Workspace</title>
     <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Workspace</link>
     <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Workspace</guid>
     <description>:File:Directory:NPM:Workspace Node → represents the location of a workspace Properties NameDescriptionnamename of the workspacefileNamelocation of the workspace ...</description>
-    <pubDate>Wed, 26 Feb 2025 10:24:57 GMT</pubDate>
+    <pubDate>Fri, 21 Nov 2025 13:49:33 GMT</pubDate>
   </item><item>
     <title>Node - NPM Binary</title>
     <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Binary</link>
     <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Binary</guid>
     <description>:NPM:Binary Node → represents information about executable files of the package that should be installed in PATH Properties NameDescriptionnamename of the executable(s)pathpath ...</description>
-    <pubDate>Wed, 26 Feb 2025 10:24:57 GMT</pubDate>
+    <pubDate>Fri, 21 Nov 2025 13:49:33 GMT</pubDate>
   </item><item>
     <title>Node - NPM BugTracker</title>
     <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-BugTracker</link>
     <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-BugTracker</guid>
     <description>:NPM:BugTracker Node → represents information about where to report bugs Properties NameDescriptionemailemail address to write to reporting bugsurlURL to your project’s issue ...</description>
-    <pubDate>Wed, 26 Feb 2025 10:24:57 GMT</pubDate>
+    <pubDate>Fri, 21 Nov 2025 13:49:33 GMT</pubDate>
   </item><item>
     <title>Node - NPM Config</title>
     <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Config</link>
     <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Config</guid>
     <description>:NPM:Config Node → represents a configuration parameter Properties NameDescriptionnamename of the config parametervaluevalue of the configuration parameter ...</description>
-    <pubDate>Wed, 26 Feb 2025 10:24:57 GMT</pubDate>
+    <pubDate>Fri, 21 Nov 2025 13:49:33 GMT</pubDate>
   </item><item>
     <title>Node - NPM Cpu</title>
     <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Cpu</link>
     <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Cpu</guid>
     <description>:NPM:Cpu Node → represents a cpu architecture and its type (supported / blocked) Properties NameDescriptionnamename of the cpu architecture e.g. “arm”typetype of the cpu architecture - either supported (e.g.</description>
-    <pubDate>Wed, 26 Feb 2025 10:24:57 GMT</pubDate>
+    <pubDate>Fri, 21 Nov 2025 13:49:33 GMT</pubDate>
   </item><item>
     <title>Node - NPM Dependency</title>
     <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Dependency</link>
     <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Dependency</guid>
     <description>:NPM:Dependency Node → represents a dependency Properties NameDescriptionnamename of the dependenversionRangerange of version of the dependeoptionaltrue if the dependency ...</description>
-    <pubDate>Wed, 26 Feb 2025 10:24:57 GMT</pubDate>
+    <pubDate>Fri, 21 Nov 2025 13:49:33 GMT</pubDate>
   </item><item>
     <title>Node - NPM DevEngine</title>
     <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-DevEngine</link>
     <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-DevEngine</guid>
     <description>:NPM:DevEngine Node → represents a developer engine Properties NameDescriptionnamename of the devEngine objecttypekey of the devEngine object - either cpu, os, libc, runtime, ...</description>
-    <pubDate>Wed, 26 Feb 2025 10:24:57 GMT</pubDate>
+    <pubDate>Fri, 21 Nov 2025 13:49:33 GMT</pubDate>
   </item><item>
     <title>Node - NPM Engine</title>
     <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Engine</link>
     <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Engine</guid>
     <description>:NPM:Engine Node → represents an engine Properties NameDescriptionnamename of the engineversionRangerange of version of the engine.</description>
-    <pubDate>Wed, 26 Feb 2025 10:24:57 GMT</pubDate>
-  </item><item>
-    <title>Node - NPM Export</title>
-    <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Export</link>
-    <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Export</guid>
-    <description>:File:NPM:Export Node → represents an entry point (alternative to main) Properties NameDescriptionnamename of the exportfileNamename of the path/file of the export ...</description>
-    <pubDate>Wed, 26 Feb 2025 10:24:57 GMT</pubDate>
-  </item><item>
-    <title>Node - NPM Funding</title>
-    <link>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Funding</link>
-    <guid>https://jqassistant-plugin.github.io/jqassistant-npm-plugin/usage/Node---NPM-Funding</guid>
-    <description>:NPM:Funding Node → represents information about where to fund a package Properties NameDescriptionnamename of the fundingtypetype of the funding e.g.</description>
-    <pubDate>Wed, 26 Feb 2025 10:24:57 GMT</pubDate>
+    <pubDate>Fri, 21 Nov 2025 13:49:33 GMT</pubDate>
   </item>
     </channel>
   </rss>
