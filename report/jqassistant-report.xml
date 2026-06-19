@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jqassistant-report xmlns="http://schema.jqassistant.org/report/v2.9">
+  <context>
+    <build>
+      <name>jQAssistant NPM Plugin</name>
+      <timestamp>2026-06-19T11:12:59.152Z</timestamp>
+      <properties></properties>
+    </build>
+  </context>
+  <group id="jqassistant-plugin:Default" date="2026-06-19T11:13:40">
+    <group id="jqassistant-plugin-maven:Default" date="2026-06-19T11:13:40">
+      <constraint id="jqassistant-plugin-maven:GroupId">
+        <description>The groupId for jQAssistant plugin Maven projects must follow the pattern 'org.jqassistant.plugin.&lt;project&gt;'.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="2">major</severity>
+        <duration>113</duration>
+      </constraint>
+      <concept id="jqassistant-plugin-maven:ParentProject" abstract="false">
+        <description>Labels all Maven projects which declare "org.jqassistant.plugin:parent" as parent module with "Parent".</description>
+        <result>
+          <columns count="1" primary="parent">
+            <column>parent</column>
+          </columns>
+          <rows count="1">
+            <row key="9ee893cafc2f9ec42942e428cf9d475c9ca1db6d470e3a264158d8dc15262465">
+              <column name="parent">
+                <element language="Generic">Named</element>
+                <source fileName="/home/runner/work/jqassistant-npm-plugin/jqassistant-npm-plugin"></source>
+                <value>jQAssistant NPM Plugin</value>
+              </column>
+            </row>
+          </rows>
+        </result>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>1</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>120</duration>
+      </concept>
+      <constraint id="jqassistant-plugin-maven:MavenModulesMustUseParentGroupId">
+        <description>All Maven projects must define the same groupId as the parent of the plugin project.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="2">major</severity>
+        <duration>84</duration>
+        <required-concept id="jqassistant-plugin-maven:ParentProject">
+          <status>success</status>
+        </required-concept>
+      </constraint>
+      <constraint id="jqassistant-plugin-maven:ParentProjectMustDefineDeveloper">
+        <description>At least one developer must be specified in the "developers" section of the parent pom.xml of a plugin project.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="2">major</severity>
+        <duration>84</duration>
+        <required-concept id="jqassistant-plugin-maven:ParentProject">
+          <status>success</status>
+        </required-concept>
+      </constraint>
+      <constraint id="jqassistant-plugin-maven:ParentProjectMustDefineScmSection">
+        <description>A SCM section having both connection and developerConnection set to "scm:git:https://github.com/jqassistant-plugin/_repository-name_" must be specified in the parent pom.xml of a plugin project.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="2">major</severity>
+        <duration>105</duration>
+        <required-concept id="jqassistant-plugin-maven:ParentProject">
+          <status>success</status>
+        </required-concept>
+      </constraint>
+      <constraint id="jqassistant-plugin-maven:ParentProjectMustDefineUrl">
+        <description>The project URL must be defined in the parent pom.xml of a plugin project.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="2">major</severity>
+        <duration>199</duration>
+        <required-concept id="jqassistant-plugin-maven:ParentProject">
+          <status>success</status>
+        </required-concept>
+      </constraint>
+      <duration>913</duration>
+    </group>
+    <group id="jqassistant-plugin-test:Default" date="2026-06-19T11:13:41">
+      <concept id="junit5:ParameterizedTestMethod" abstract="false">
+        <description>Finds all test methods (i.e. annotated with "@org.junit.jupiter.api.ParameterizedTest") and
+labels them with "Test", "Parameterized", and "Junit5".</description>
+        <verificationResult>
+          <success>false</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>72</duration>
+      </concept>
+      <concept id="junit5:TestMethod" abstract="false">
+        <description>Finds all test methods (i.e. annotated with "@org.junit.jupiter.api.Test") and
+labels them with "Test" and "Junit5".</description>
+        <result>
+          <columns count="1" primary="Test">
+            <column>Test</column>
+          </columns>
+          <rows count="10">
+            <row key="bfeea9578f51c6ac835f12daf8bd793a64bb69a884ccd8c5b7c136fcb643875b">
+              <column name="Test">
+                <element language="Java">Method</element>
+                <source fileName="/org/jqassistant/plugin/npm/PackageJsonScannerPluginIT.java" startLine="294" endLine="307">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>void manAsString()</value>
+              </column>
+            </row>
+            <row key="53e8f0440eb961815391348856128a9c701872d36fb79f6655139f02846cddbf">
+              <column name="Test">
+                <element language="Java">Method</element>
+                <source fileName="/org/jqassistant/plugin/npm/PackageJsonScannerPluginIT.java" startLine="24" endLine="32">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>void minimal()</value>
+              </column>
+            </row>
+            <row key="0adc3704f702de746eae140f0877fcc8a1fe853aa907499498142ba86a90afdc">
+              <column name="Test">
+                <element language="Java">Method</element>
+                <source fileName="/org/jqassistant/plugin/npm/PackageJsonScannerPluginIT.java" startLine="278" endLine="290">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>void repositoryAsString()</value>
+              </column>
+            </row>
+            <row key="08741f377db338ee098811a2216df97308e4dea648bad20a2a34b5b52074f7a0">
+              <column name="Test">
+                <element language="Java">Method</element>
+                <source fileName="/org/jqassistant/plugin/npm/PackageJsonScannerPluginIT.java" startLine="199" endLine="210">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>void invalidProperties()</value>
+              </column>
+            </row>
+            <row key="4d6ce49dd4374ed6b04a13be99980afed5919c38dcfe1e4c669b1b84a6e749b3">
+              <column name="Test">
+                <element language="Java">Method</element>
+                <source fileName="/org/jqassistant/plugin/npm/PackageJsonScannerPluginIT.java" startLine="244" endLine="257">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>void binAsString()</value>
+              </column>
+            </row>
+            <row key="847712ed2585fc9eefc6b1ea782f3487056df46207017709e094e05225b58287">
+              <column name="Test">
+                <element language="Java">Method</element>
+                <source fileName="/org/jqassistant/plugin/npm/PackageJsonScannerPluginIT.java" startLine="261" endLine="274">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>void exportsAsString()</value>
+              </column>
+            </row>
+            <row key="a0ee90dadc2a5dd1144cc9e517bfaf37ff3798c5f05a91f3453fe3483c27b559">
+              <column name="Test">
+                <element language="Java">Method</element>
+                <source fileName="/org/jqassistant/plugin/npm/PackageJsonScannerPluginIT.java" startLine="36" endLine="195">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>void full()</value>
+              </column>
+            </row>
+            <row key="b8133a3bcc579984904c896f49cbbe5b22cc493eddaf076bf558a1ae283e9452">
+              <column name="Test">
+                <element language="Java">Method</element>
+                <source fileName="/org/jqassistant/plugin/npm/PackageJsonScannerPluginIT.java" startLine="318" endLine="340">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>void devEngines()</value>
+              </column>
+            </row>
+            <row key="b4c43544aa00b81dcf909ad0b10e18d5e86a443895d1707742e7d04c893bdbf5">
+              <column name="Test">
+                <element language="Java">Method</element>
+                <source fileName="/org/jqassistant/plugin/npm/concept/NpmIT.java" startLine="27" endLine="57">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>void resolveWorkspaces()</value>
+              </column>
+            </row>
+            <row key="63f4e49563db253628fbd5be4929a8e5cc2b2ccf1fc4b9c4591bfde95a6bcc83">
+              <column name="Test">
+                <element language="Java">Method</element>
+                <source fileName="/org/jqassistant/plugin/npm/PackageJsonScannerPluginIT.java" startLine="214" endLine="233">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>void authorAsString()</value>
+              </column>
+            </row>
+          </rows>
+        </result>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>10</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>89</duration>
+      </concept>
+      <concept id="junit5:TestTemplateMethod" abstract="false">
+        <description>Labels all methods annotated by "@org.junit.jupiter.api.TestTemplate"
+with "Junit5", "Test" and "Template".</description>
+        <verificationResult>
+          <success>false</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>87</duration>
+      </concept>
+      <concept id="junit5:RepeatedTestMethod" abstract="false">
+        <description>Finds all test methods (i.e. annotated with "@org.junit.jupiter.api.RepeatedTest") and
+labels them with "Test", "Repeated", and "Junit5".</description>
+        <verificationResult>
+          <success>false</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>59</duration>
+      </concept>
+      <concept id="junit5:TestClass" abstract="false">
+        <description>Labels all classes containing test methods with "Test" and "Junit5".</description>
+        <result>
+          <columns count="2" primary="TestClass">
+            <column>TestClass</column>
+            <column>TestMethods</column>
+          </columns>
+          <rows count="2">
+            <row key="7091608933fa8bfad0892aedf52dbb028a0052854d1286229f1aa744f418de00">
+              <column name="TestClass">
+                <element language="Java">Type</element>
+                <source fileName="/org/jqassistant/plugin/npm/concept/NpmIT.java">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>org.jqassistant.plugin.npm.concept.NpmIT</value>
+              </column>
+              <column name="TestMethods">
+                <value>void resolveWorkspaces()</value>
+              </column>
+            </row>
+            <row key="024884d6711b127445210969722d47ee450871e36190150c4afe2299d130e9eb">
+              <column name="TestClass">
+                <element language="Java">Type</element>
+                <source fileName="/org/jqassistant/plugin/npm/PackageJsonScannerPluginIT.java">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT-tests.test-jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="test-jar" version="2.2.0-SNAPSHOT" classifier="tests"></parent>
+                </source>
+                <value>org.jqassistant.plugin.npm.PackageJsonScannerPluginIT</value>
+              </column>
+              <column name="TestMethods">
+                <value>void minimal(), void full(), void invalidProperties(), void authorAsString(), void binAsString(), void exportsAsString(), void repositoryAsString(), void manAsString(), void devEngines()</value>
+              </column>
+            </row>
+          </rows>
+        </result>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>2</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>83</duration>
+        <required-concept id="junit5:ParameterizedTestMethod">
+          <status>success</status>
+        </required-concept>
+        <required-concept id="junit5:TestMethod">
+          <status>success</status>
+        </required-concept>
+        <required-concept id="junit5:TestTemplateMethod">
+          <status>success</status>
+        </required-concept>
+        <required-concept id="junit5:RepeatedTestMethod">
+          <status>success</status>
+        </required-concept>
+      </concept>
+      <concept id="jqassistant-plugin-test:IT" abstract="false">
+        <description>Adds a label "IntegrationTest" to all non-abstract classes deriving from AbstractPluginIT or AbstractJavaPluginIT.</description>
+        <verificationResult>
+          <success>false</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>95</duration>
+        <required-concept id="junit5:TestClass">
+          <status>success</status>
+        </required-concept>
+      </concept>
+      <constraint id="jqassistant-plugin-test:IntegrationTestClassSuffix">
+        <description>All integration test classes must have the name suffix "IT" for being executed using the Maven Failsafe Plugin.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="2">major</severity>
+        <duration>26</duration>
+        <required-concept id="jqassistant-plugin-test:IT">
+          <status>success</status>
+        </required-concept>
+      </constraint>
+      <duration>565</duration>
+    </group>
+    <group id="jqassistant-plugin-plugin:Default" date="2026-06-19T11:13:41">
+      <concept id="neo4j:Procedure" abstract="false">
+        <description>Labels all types annotated with "@org.neo4j.procedure.Procedure" with `Neo4j` and `Procedure`.</description>
+        <verificationResult>
+          <success>false</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>48</duration>
+      </concept>
+      <concept id="jqassistant-plugin-plugin:PluginDescriptor" abstract="false">
+        <description>Labels jQAssistant plugin descriptor files with `jQAssistant` and `PluginDescriptor`.</description>
+        <result>
+          <columns count="2" primary="Artifact">
+            <column>Artifact</column>
+            <column>PluginDescriptor</column>
+          </columns>
+          <rows count="1">
+            <row key="617847511defb674209976672ba589e335a3e6fc69764f97137d60a9b7099aa9">
+              <column name="Artifact">
+                <element language="Generic">ArtifactFile</element>
+                <source fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT.jar"></source>
+                <value>org.jqassistant.plugin:jqassistant-npm-plugin:jar:2.2.0-SNAPSHOT</value>
+              </column>
+              <column name="PluginDescriptor">
+                <element language="Generic">File</element>
+                <source fileName="/META-INF/jqassistant-plugin.xml">
+                  <parent fileName="/home/runner/.m2/repository/org/jqassistant/plugin/jqassistant-npm-plugin/2.2.0-SNAPSHOT/jqassistant-npm-plugin-2.2.0-SNAPSHOT.jar" group="org.jqassistant.plugin" name="jqassistant-npm-plugin" type="jar" version="2.2.0-SNAPSHOT"></parent>
+                </source>
+                <value>/META-INF/jqassistant-plugin.xml</value>
+              </column>
+            </row>
+          </rows>
+        </result>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>1</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>55</duration>
+      </concept>
+      <concept id="jqassistant-plugin-plugin:PluginRegistersProcedure" abstract="false">
+        <description>Creates a `REGISTERS` relation between all procedure class elements of the jQAssistant plugin
+            descriptor to the matching Java type.</description>
+        <verificationResult>
+          <success>false</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>172</duration>
+        <required-concept id="jqassistant-plugin-plugin:PluginDescriptor">
+          <status>success</status>
+        </required-concept>
+      </concept>
+      <constraint id="jqassistant-plugin-plugin:Neo4jProceduresMustBeRegistered">
+        <description>Types declaring Neo4j procedures must be registered.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="2">major</severity>
+        <duration>58</duration>
+        <required-concept id="neo4j:Procedure">
+          <status>success</status>
+        </required-concept>
+        <required-concept id="jqassistant-plugin-plugin:PluginRegistersProcedure">
+          <status>success</status>
+        </required-concept>
+      </constraint>
+      <concept id="neo4j:UserFunction" abstract="false">
+        <description>Labels all types annotated with "@org.neo4j.procedure.UserFunction" with `Neo4j` and
+            `UserFunction`.</description>
+        <verificationResult>
+          <success>false</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>64</duration>
+      </concept>
+      <concept id="jqassistant-plugin-plugin:PluginRegistersUserFunction" abstract="false">
+        <description>Creates a `REGISTERS` relation between all function class elements of the jQAssistant plugin
+            descriptor to the matching Java type.</description>
+        <verificationResult>
+          <success>false</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="4">info</severity>
+        <duration>156</duration>
+        <required-concept id="jqassistant-plugin-plugin:PluginDescriptor">
+          <status>success</status>
+        </required-concept>
+      </concept>
+      <constraint id="jqassistant-plugin-plugin:Neo4jUserFunctionsMustBeRegistered">
+        <description>Types declaring Neo4j user functions must be registered.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="2">major</severity>
+        <duration>45</duration>
+        <required-concept id="neo4j:UserFunction">
+          <status>success</status>
+        </required-concept>
+        <required-concept id="jqassistant-plugin-plugin:PluginRegistersUserFunction">
+          <status>success</status>
+        </required-concept>
+      </constraint>
+      <constraint id="jqassistant-plugin-plugin:PluginDescriptorShouldProvideVersion">
+        <description>The jQAssistant XML Plugin descriptor ("/META-INF/jqassistant-plugin.xml") should provide a "version" attribute for its root element.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="3">minor</severity>
+        <duration>153</duration>
+        <required-concept id="jqassistant-plugin-plugin:PluginDescriptor">
+          <status>success</status>
+        </required-concept>
+      </constraint>
+      <duration>813</duration>
+    </group>
+    <group id="jqassistant-plugin-package:Default" date="2026-06-19T11:13:42">
+      <concept id="java:GeneratedLombokType" abstract="false">
+        <description>Labels types generated by Lombok as 'Generated' (requires 'lombok.addLombokGeneratedAnnotation=true' in 'lombok.config').</description>
+        <result>
+          <columns count="1" primary="GeneratedTypes">
+            <column>GeneratedTypes</column>
+          </columns>
+          <rows count="1">
+            <row key="98b6e8798d4cdf756d3ecd6293c91a61b20af82571c711f2844d28eea825628c">
+              <column name="GeneratedTypes">
+                <value>0</value>
+              </column>
+            </row>
+          </rows>
+        </result>
+        <verificationResult>
+          <success>false</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>warning</status>
+        <severity level="3">minor</severity>
+        <duration>53</duration>
+      </concept>
+      <concept id="java:GeneratedType" abstract="false">
+        <description>Reports the count of types labeled with `Generated`, grouped by containing artifact.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="3">minor</severity>
+        <duration>0</duration>
+        <providing-concept id="java:GeneratedLombokType">
+          <status>failure</status>
+        </providing-concept>
+      </concept>
+      <constraint id="jqassistant-plugin-package:PackagesMustHaveGroupIdPrefix">
+        <description>All package names used in a Maven project must start with the groupId.</description>
+        <verificationResult>
+          <success>true</success>
+          <rowCount>0</rowCount>
+        </verificationResult>
+        <status>success</status>
+        <severity level="2">major</severity>
+        <duration>106</duration>
+        <required-concept id="java:GeneratedType">
+          <status>success</status>
+        </required-concept>
+      </constraint>
+      <duration>181</duration>
+    </group>
+    <duration>183</duration>
+  </group>
+</jqassistant-report>
