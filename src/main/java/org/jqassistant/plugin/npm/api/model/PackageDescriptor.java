@@ -12,6 +12,10 @@ import java.util.List;
 @Label("Package")
 public interface PackageDescriptor extends NPMDescriptor, NamedDescriptor {
 
+    String getType();
+
+    void setType(String type);
+
     String getVersion();
 
     void setVersion(String version);
